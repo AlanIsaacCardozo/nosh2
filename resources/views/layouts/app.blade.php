@@ -49,9 +49,9 @@
                 </button>
 
                 <!-- Branding Image -->
-                <span class="navbar-brand" id="logo" data-toggle="offcanvas">
-                    Nosh
-                </span>
+                <div class="navbar-brand" id="logo" data-toggle="offcanvas">
+                    <span style="color:#fff"> Simple </span><span style="color:rgb(174,185,240)"> note </span>
+                </div>
                 @if (Session::has('pid'))
                     <div class="navbar-brand">
                         <span class="fa-btn" data-toggle="modal" data-target="#overviewModal" role="button" id="overviewModal_trigger"><i class="fa fa-user fa-lg"></i></span>

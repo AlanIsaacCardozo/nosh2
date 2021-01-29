@@ -52,6 +52,12 @@ body {
     font-size: 30px;
     text-shadow: 4px 4px 4px #aaa;
     vertical-align: middle;
+    animation: logo-anim 8s linear infinite;
+}
+@keyframes logo-anim {
+    0% {right: 0%;}
+    50% {right:100%;}
+    100% {right:0%;}
 }
 
 .panel-body,.modal-body {
