@@ -54,6 +54,7 @@ body {
     vertical-align: middle;
     animation: logo-anim 8s linear infinite;
 }
+
 @keyframes logo-anim {
     0% {right: 0%;}
     50% {right:100%;}
@@ -259,7 +260,7 @@ body {
 
 div.list-category h5.list-category-title {
     display: block;
-    padding 14px 0 15px 0;
+    padding: 14px 0 15px 0;
     font-size: 15px;
     font-weight: 100;
     margin-bottom: 0px;
