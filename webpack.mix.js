@@ -12,7 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.styles([
-    'public/assets/css/font-awesome.min.css',
+    'public/assets/css/fontawesome/css/all.min.css',
     'public/assets/css/bootstrap.min.css',
     'public/assets/css/toastr.min.css',
     'public/assets/css/nosh-timeline.css',
@@ -24,7 +24,7 @@ mix.styles([
 ], 'public/assets/css/builds/base.css');
 
 mix.styles([
-    'public/assets/css/font-awesome.min.css',
+    'public/assets/css/fontawesome/css/all.min.css',
     'public/assets/css/bootstrap.min.css',
     'public/assets/css/toastr.min.css',
     'public/assets/css/nosh-timeline.css',
@@ -37,7 +37,7 @@ mix.styles([
 ], 'public/assets/css/builds/schedule.css');
 
 mix.styles([
-    'public/assets/css/font-awesome.min.css',
+    'public/assets/css/fontawesome/css/all.min.css',
     'public/assets/css/bootstrap.min.css',
     'public/assets/css/toastr.min.css',
     'public/assets/css/nosh-timeline.css',
@@ -50,7 +50,7 @@ mix.styles([
 ], 'public/assets/css/builds/document_upload.css');
 
 mix.styles([
-    'public/assets/css/font-awesome.min.css',
+    'public/assets/css/fontawesome/css/all.min.css',
     'public/assets/css/bootstrap.min.css',
     'public/assets/css/toastr.min.css',
     'public/assets/css/nosh-timeline.css',
@@ -63,7 +63,7 @@ mix.styles([
 ], 'public/assets/css/builds/login.css');
 
 mix.styles([
-    'public/assets/css/font-awesome.min.css',
+    'public/assets/css/fontawesome/css/all.min.css',
     'public/assets/css/bootstrap.min.css',
     'public/assets/css/toastr.min.css',
     'public/assets/css/nosh-timeline.css',

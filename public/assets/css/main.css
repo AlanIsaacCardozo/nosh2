@@ -48,7 +48,7 @@ body {
 }
 
 #logo{
-    font-family: 'Pacifico', arial, serif;
+    font-family: 'Helvitica', arial, serif;
     font-size: 30px;
     text-shadow: 4px 4px 4px #aaa;
     vertical-align: middle;
@@ -57,9 +57,9 @@ body {
 }
 
 @keyframes logo-anim {
-    0% {right: 0%;}
-    50% {right:100%;}
-    100% {right:0%;}
+    0% {right: 0px;}
+    50% {right:50px;}
+    100% {right:0px;}
 }
 
 .panel-body,.modal-body {
@@ -332,4 +332,7 @@ div.list-category li.list-group-item:first-child {
     right: 5px;
     bottom: 10px;
     padding: 5px 8px;
+}
+nav.navbar{
+    background-image:linear-gradient(#336fD6,#2865CB 60%, #235FC6);
 }
