@@ -53,6 +53,7 @@ body {
     text-shadow: 4px 4px 4px #aaa;
     vertical-align: middle;
     animation: logo-anim 8s linear infinite;
+    position:relative;
 }
 
 @keyframes logo-anim {
