@@ -52,14 +52,6 @@ body {
     font-size: 30px;
     text-shadow: 4px 4px 4px #aaa;
     vertical-align: middle;
-    animation: logo-anim 8s linear infinite;
-    position:relative;
-}
-
-@keyframes logo-anim {
-    0% {right: 0px;}
-    50% {right:50px;}
-    100% {right:0px;}
 }
 
 .panel-body,.modal-body {
