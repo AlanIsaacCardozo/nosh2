@@ -6136,7 +6136,9 @@ class CoreController extends Controller
             ]);
             $data_jwk['public_jwk'] = $data_jwk['private_jwk']->toPublic();
             $data_jwk['practice_id'] = $practice_id;
-            DB::table('practiceinfo_plus')->insert($practice_id);
+            $data_jwk['private_jwk'] = json_encode($data_jwk['private_jwk']);
+            $data_jwk['public_jwk'] = json_encode($data_jwk['public_jwk']);
+            DB::table('practiceinfo_plus')->insert($data_jwk);
             $this->audit('Add');
             Session::put('message_action', trans('noshform.practice') . " #" . $practice_id . " " . trans('noshform.practice_create1'));
             return redirect()->route('setup', [$practice_id]);
