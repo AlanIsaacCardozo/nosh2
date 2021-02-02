@@ -50,7 +50,7 @@
 
                 <!-- Branding Image -->
                 <div class="navbar-brand" id="logo" data-toggle="offcanvas">
-                    <span style="color:#fff">Simple</span><span style="color:rgb(174,185,240)">note</span>
+                    <i class="fas fa-infinity" style="color:#fff"></i><span style="color:#fff">Simple</span><span style="color:rgb(174,185,240)">note</span>
                 </div>
                 @if (Session::has('pid'))
                     <div class="navbar-brand">
