@@ -43,12 +43,14 @@
                             {!! $panel_dropdown !!}
                         </div>
                     @endif
-                    <div class="pull-right" style="margin-right: 5px;">
-                        <input type="button" onclick="printEncounter('panel-body')" class="btn btn-primary btn-sm dropdown-toggle">
-                            <i class="fa fa-print" aria-hidden="true" style="margin-right:5px"></i>
-                            Print
-                        </input>
-                    </div>
+                    @if (isset($encounter_preview))
+                        <div class="pull-right" style="margin-right: 5px;">
+                            <input type="button" onclick="printEncounter('panel-body')" class="btn btn-primary btn-sm dropdown-toggle">
+                                <i class="fa fa-print" aria-hidden="true" style="margin-right:5px"></i>
+                                Print
+                            </input>
+                        </div>
+                    @endif
                 </div>
                 <div class="panel-body">
                     @if (isset($search_rx))
@@ -1180,7 +1182,7 @@
         if (isNaN($('#calc_liquid_dose').val())) $('#calc_liquid_dose').val('');
     }
     function printEncounter(divName) {
-        var printContents = document.getElementById(divName).innerHTML;
+        var printContents = document.getElementsByClassName(divName)[0].innerHTML;
         w=window.open();
         w.document.write(printContents);
         w.print();

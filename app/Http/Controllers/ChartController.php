@@ -5612,6 +5612,7 @@ class ChartController extends Controller {
         $data = array_merge($data, $this->sidebar_build('chart'));
         $data['assets_js'] = $this->assets_js('chart');
         $data['assets_css'] = $this->assets_css('chart');
+        $data['encounter_preview'] = true;
         return view('chart', $data);
     }
 
