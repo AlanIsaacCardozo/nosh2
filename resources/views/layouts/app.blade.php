@@ -37,7 +37,7 @@
 </head>
 <body id="app-layout">
     <nav class="navbar navbar-default navbar-static-top" role="navigation">
-        <div class="container">
+        <div class="navbar-static-top">
             <div class="navbar-header">
 
                 <!-- Collapsed Hamburger -->
@@ -50,7 +50,8 @@
 
                 <!-- Branding Image -->
                 <div class="navbar-brand" id="logo" data-toggle="offcanvas">
-                    <i class="fas fa-infinity" style="color:#fff"></i><span style="color:#fff">Simple</span><span style="color:rgb(174,185,240)">note</span>
+                    <i class="fas fa-infinity" style="color:#fff; margin-right:5px;"></i>
+                    <span class = "mobile-hide"><span style="color:#fff">Simple</span><span style="color:rgb(174,185,240)">note</span></span>
                 </div>
                 @if (Session::has('pid'))
                     <div class="navbar-brand">
@@ -253,35 +254,35 @@
                             <a href="{{ route('conditions_list', ['type' => 'active']) }}">
                                 <i class="fa fa-bars fa-fw fa-lg"></i>
                                 <span class="sidebar-item">{{ trans('nosh.conditions_list') }}</span>
-                                <span class="badge">{{ $conditions_badge }}</span>
+                                <span class="badge sidebar-icon-right">{{ $conditions_badge }}</span>
                             </a>
                         </li>
                         <li @if(isset($medications_active)) class="active" @endif>
                             <a href="{{ route('medications_list', ['type' => 'active']) }}">
                                 <i class="fa fa-eyedropper fa-fw fa-lg"></i>
                                 <span class="sidebar-item">{{ trans('nosh.medications_list') }}</span>
-                                <span class="badge">{{ $medications_badge }}</span>
+                                <span class="badge sidebar-icon-right">{{ $medications_badge }}</span>
                             </a>
                         </li>
                         <li @if(isset($supplements_active)) class="active" @endif>
                             <a href="{{ route('supplements_list', ['type' => 'active']) }}">
                                 <i class="fa fa-tree fa-fw fa-lg"></i>
                                 <span class="sidebar-item">{{ trans('nosh.supplements_list') }}</span>
-                                <span class="badge">{{ $supplements_badge }}</span>
+                                <span class="badge sidebar-icon-right">{{ $supplements_badge }}</span>
                             </a>
                         </li>
                         <li @if(isset($immunizations_active)) class="active" @endif>
                             <a href="{{ route('immunizations_list') }}">
                                 <i class="fa fa-magic fa-fw fa-lg"></i>
                                 <span class="sidebar-item">{{ trans('nosh.immunizations_list') }}</span>
-                                <span class="badge">{{ $immunizations_badge }}</span>
+                                <span class="badge sidebar-icon-right">{{ $immunizations_badge }}</span>
                             </a>
                         </li>
                         <li @if(isset($allergies_active)) class="active" @endif>
                             <a href="{{ route('allergies_list', ['type' => 'active']) }}">
                                 <i class="fa fa-exclamation-triangle fa-fw fa-lg"></i>
                                 <span class="sidebar-item">{{ trans('nosh.allergies_list') }}</span>
-                                <span class="badge">{{ $allergies_badge }}</span>
+                                <span class="badge sidebar-icon-right">{{ $allergies_badge }}</span>
                             </a>
                         </li>
                         @if (Session::get('group_id') != '100')
@@ -289,7 +290,7 @@
                                 <a href="{{ route('alerts_list', ['type' => 'active']) }}">
                                     <i class="fa fa-bell fa-fw fa-lg"></i>
                                     <span class="sidebar-item">{{ trans('nosh.alerts_list') }}</span>
-                                    <span class="badge">{{ $alerts_badge }}</span>
+                                    <span class="badge sidebar-icon-right">{{ $alerts_badge }}</span>
                                 </a>
                             </li>
                         @endif
@@ -297,14 +298,14 @@
                             <a href="{{ route('orders_list', ['type' => 'orders_labs']) }}">
                                 <i class="fa fa-thumbs-o-up fa-fw fa-lg"></i>
                                 <span class="sidebar-item">{{ trans('nosh.orders_list') }}</span>
-                                <span class="badge">{{ $orders_badge }}</span>
+                                <span class="badge sidebar-icon-right">{{ $orders_badge }}</span>
                             </a>
                         </li>
                         <li @if(isset($encounters_active)) class="active" @endif>
                             <a href="{{ route('encounters_list') }}">
                                 <i class="fa fa-stethoscope fa-fw fa-lg"></i>
                                 <span class="sidebar-item">{{ trans('nosh.encounters_list') }}</span>
-                                <span class="badge">{{ $encounters_badge }}</span>
+                                <span class="badge sidebar-icon-right">{{ $encounters_badge }}</span>
                             </a>
                         </li>
                         <li @if(isset($documents_active)) class="active" @endif>
