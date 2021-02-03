@@ -45,10 +45,10 @@
                     @endif
                     @if (isset($encounter_preview))
                         <div class="pull-right" style="margin-right: 5px;">
-                            <input type="button" onclick="printEncounter('panel-body')" class="btn btn-primary btn-sm dropdown-toggle">
+                            <a type="button" onclick="printEncounter('panel-body')" class="btn btn-primary btn-sm dropdown-toggle">
                                 <i class="fa fa-print" aria-hidden="true" style="margin-right:5px"></i>
                                 Print
-                            </input>
+                            </a>
                         </div>
                     @endif
                 </div>
