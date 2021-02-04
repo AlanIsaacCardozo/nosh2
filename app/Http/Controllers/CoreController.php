@@ -280,7 +280,7 @@ class CoreController extends Controller
         			$message = trans('noshform.api_practice_yes');
         			$message .= '  ' . trans('noshform.api_practice_yes1') . ': ' . $result['status'];
         		}
-    		    //$this->send_mail('emails.apiregister', $data_message, 'NOSH ChartingSystem API Registration', $request->input('email'), '1');
+    		    //$this->send_mail('emails.apiregister', $data_message, 'Simplenote ChartingSystem API Registration', $request->input('email'), '1');
             } else {
                 $data3['practice_api_url'] = 'nosync';
                 DB::table('practiceinfo')->where('practice_id', '=', $practice_id)->update($data);
@@ -817,7 +817,7 @@ class CoreController extends Controller
                     $url = URL::to('accept_invitation') . '/' . $data['password'];
                     App::setLocale(Session::get('practice_locale'));
                     $email['message_data'] = trans('noshform.new_user_message') . ' ' . $practice->practice_name . '.<br>' . trans('noshform.new_user_message1') . ' ' . $url . ' ' . trans('noshform.new_user_message2');
-                    $this->send_mail('auth.emails.generic', $email, 'Invitation to NOSH ChartingSystem', $data['email'], Session::get('practice_id'));
+                    $this->send_mail('auth.emails.generic', $email, 'Invitation to Simplenote ChartingSystem', $data['email'], Session::get('practice_id'));
                     App::setLocale(Session::get('user_locale'));
                 }
                 $data['displayname'] = $data['firstname'] . " " . $data['lastname'];
@@ -1787,7 +1787,7 @@ class CoreController extends Controller
 
     public function dashboard(Request $request)
     {
-        $data['title'] = 'NOSH ChartingSystem';
+        $data['title'] = 'Simplenote ChartingSystem';
         $user_id = Session::get('user_id');
         if (Session::get('group_id') == '100') {
             $row = DB::table('demographics_relate')->where('id', '=', $user_id)->first();
@@ -5595,7 +5595,7 @@ class CoreController extends Controller
                 $id = DB::table('sendfax')->insertGetId($fax_data);
                 $this->audit('Add');
                 $directory = Storage::path('sentfax/' . $id);
-                mkdir($directory, 0777);
+                mkdir($directory, 0777, true);
                 $sendfax = [
                     'faxsubject' => null,
                     'faxcoverpage' => null,
@@ -6739,7 +6739,7 @@ class CoreController extends Controller
             Session::put('provider_id', $provider_id);
         }
         // Just show provider selector
-        $data['title'] = 'NOSH ChartingSystem';
+        $data['title'] = 'Simplenote ChartingSystem';
         if (Session::has('pid')) {
             $data = array_merge($data, $this->sidebar_build('chart'));
         }

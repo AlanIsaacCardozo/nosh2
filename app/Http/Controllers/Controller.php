@@ -11464,7 +11464,7 @@ class Controller extends BaseController
             // $pdf->Cell(0, 10, 'Page '.$pdf->getAliasNumPage().'/'.$pdf->getAliasNbPages(), 1, false, 'C', 0, '', 0, false, 'T', 'M');
 
         });
-        PDF::SetAuthor('NOSH ChartingSystem');
+        PDF::SetAuthor('Simplenote ChartingSystem');
         PDF::SetTitle('NOSH PDF Document');
         if ($type == '1') {
             PDF::SetMargins('26', '26' ,'26', true);
@@ -12029,7 +12029,7 @@ class Controller extends BaseController
             $file_root = public_path() . '/temp/';
             $file_name = time() . '_' . Session::get('user_id') . '_printhcfa_';
             $file_path = $file_root . $file_name . 'final.pdf';
-            PDF::SetAuthor('NOSH ChartingSystem');
+            PDF::SetAuthor('Simplenote ChartingSystem');
             PDF::SetTitle('NOSH PDF Document');
             PDF::SetMargins('0', '0' ,'0', true);
             PDF::SetFont('Courier', '', 12);

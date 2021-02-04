@@ -60,7 +60,7 @@
 <script type="text/javascript">
     const Connect = window.uportconnect;
     const Mnid = window.mnid;
-	const appName = 'NOSH ChartingSystem';
+	const appName = 'Simplenote ChartingSystem';
     const uport = new Connect(appName, {
         network: 'rinkeby'
     });

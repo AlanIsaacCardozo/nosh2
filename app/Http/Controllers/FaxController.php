@@ -15,7 +15,7 @@ use URL;
 class FaxController extends Controller {
 
 	/**
-	* NOSH ChartingSystem Fax System, to be run as a cron job
+	* Simplenote ChartingSystem Fax System, to be run as a cron job
 	*/
 
 	public function fax(Request $request)

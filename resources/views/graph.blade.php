@@ -73,7 +73,7 @@
             ],
             credits: {
                 href: 'http://noshemr.wordpress.com',
-                text: 'NOSH ChartingSystem'
+                text: 'Simplenote ChartingSystem'
             }
         };
     }
@@ -131,7 +131,7 @@
             ],
             credits: {
                 href: 'http://noshemr.wordpress.com',
-                text: 'NOSH ChartingSystem'
+                text: 'Simplenote ChartingSystem'
             },
             plotOptions: {
                 spline: {

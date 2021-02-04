@@ -35,7 +35,7 @@ return [
     "captcha_code" => "Código CAPTCHA",
     "captcha_code1" => "Introduce el código CAPTCHA aquí.",
     "button_register" => "Registro",
-    "invite_title" => "Acépte su invitación para acceder a NOSH ChartingSystem",
+    "invite_title" => "Acépte su invitación para acceder a Simplenote ChartingSystem",
     "accept_invitation" => "Aceptar la invitación",
     "reset_password" => "Restablecer el password",
     "new_password" => "Nuevo password",
@@ -377,7 +377,7 @@ return [
     "no_transaction" => "Recibo de transacción no encontrado",
 
     // Email
-    "api_provider_register1" => "Este mensaje es enviado por uno de sus pacientes que tiene un sistema electrónico de registro de salud NOSH ChartingSystem.",
+    "api_provider_register1" => "Este mensaje es enviado por uno de sus pacientes que tiene un sistema electrónico de registro de salud Simplenote ChartingSystem.",
     "api_provider_register2" => "Su cuenta ha sido agregada al sistema de su paciente, pero deberá hacer clic en el siguiente enlace para completar su registro.",
     "api_provider_register3" => "Asegúrese de tener su NIP de Proveedor con usted ya que necesitará esta información para registrar su cuenta exitosamente.",
     "api_provider_register4" => "Además, si no se registra para su cuenta dentro de las 24 horas, deberá comunicarse con su paciente para volver a agregarla.",
@@ -385,7 +385,7 @@ return [
     "api_provider_register6" => "Asegúrese de tener su NIP de práctica (no NIP de proveedor) con usted, ya que necesitará esta información para registrar su práctica con éxito.",
     "api_provider_register7" => "Además, si no se registra en su cuenta dentro de las 24 horas, deberá comunicarse con su paciente para volver a agregar su práctica.",
     "api_uma_register1" => "Este mensaje es enviado por uno de sus pacientes,",
-    "api_uma_register2" => ", que tiene un sistema electrónico de registro de salud NOSH ChartingSystem.",
+    "api_uma_register2" => ", que tiene un sistema electrónico de registro de salud Simplenote ChartingSystem.",
     "api_uma_register3" => "Usted ha sido invitado a acceder al registro de salud de su paciente. Haga clic en el siguiente enlace para completar su registro.",
     "api_uma_register4" => "Asegúrese de tener su NIP de Proveedor con usted ya que necesitará esta información para registrar su cuenta exitosamente.",
     "api_uma_register5" => "Además, si no se registra en  su cuenta dentro de las 24 horas, deberá comunicarse con su paciente para enviar una invitación válida nuevamente.",

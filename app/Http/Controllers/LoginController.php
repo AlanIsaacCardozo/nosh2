@@ -302,7 +302,7 @@ class LoginController extends Controller {
         $url = route('googleoauth');
         $google = new Google_Client();
         $google->setRedirectUri($url);
-        $google->setApplicationName('NOSH ChartingSystem');
+        $google->setApplicationName('Simplenote ChartingSystem');
         $google->setClientID(env('GOOGLE_KEY'));
         $google->setClientSecret(env('GOOGLE_SECRET'));
         $google->setAccessType('offline');
@@ -888,7 +888,7 @@ class LoginController extends Controller {
                 $data2['message_data'] = trans('noshform.password_reset1') . '<br>';
                 $data2['message_data'] .= trans('noshform.password_reset2') . ':<br>';
                 $data2['message_data'] .= $url;
-                $this->send_mail('auth.emails.generic', $data2, 'Reset password to NOSH ChartingSystem', $request->input('email'), $query->practice_id);
+                $this->send_mail('auth.emails.generic', $data2, 'Reset password to Simplenote ChartingSystem', $request->input('email'), $query->practice_id);
                 $message = trans('noshform.password_reset4');
             } else {
                 $message = trans('noshform.error') . ' - ' . trans('noshform.password_email1');

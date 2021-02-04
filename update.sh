@@ -144,7 +144,7 @@ chmod 777 $NEWNOSH/noshfax
 chmod 777 $NEWNOSH/noshreminder
 chmod 777 $NEWNOSH/noshbackup
 cp $OLDNOSH/.google $NEWNOSH/.google
-log_only "Updated NOSH ChartingSystem core files."
+log_only "Updated Simplenote ChartingSystem core files."
 a2enmod ssl
 if [ -e "$WEB_CONF"/nosh.conf ]; then
 	sed -i "s_Alias /nosh /noshdocuments/nosh-cs/public_Alias /nosh-old /noshdocuments/nosh-cs/public_" "$WEB_CONF"/nosh.conf
@@ -185,12 +185,12 @@ APACHE_CONF="$APACHE_CONF
 	</IfModule>
 </Directory>"
 echo "$APACHE_CONF" >> "$WEB_CONF"/nosh2.conf
-log_only "NOSH ChartingSystem Apache configuration file set."
+log_only "Simplenote ChartingSystem Apache configuration file set."
 log_only "Restarting Apache service."
 $APACHE >> $LOG 2>&1
 # Installation completed
-log_only "You can now use NOSH ChartingSystem by browsing to:"
+log_only "You can now use Simplenote ChartingSystem by browsing to:"
 log_only "https://localhost/nosh"
-log_only "The old version of NOSH ChartingSystem can still be used by browsing to:"
+log_only "The old version of Simplenote ChartingSystem can still be used by browsing to:"
 log_only "https://localhost/nosh-old"
 exit 0

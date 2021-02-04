@@ -1,6 +1,6 @@
 {
     "name": "nosh2/nosh2",
-    "description": "NOSH ChartingSystem.",
+    "description": "Simplenote",
     "keywords": ["nosh", "laravel", "medical", "jquery", "javascript", "php", "health", "ehr", "emr"],
     "license": "AGPL-3.0",
     "type": "project",

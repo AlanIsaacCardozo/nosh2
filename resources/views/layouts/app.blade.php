@@ -10,7 +10,7 @@
         @if (isset($title))
             {{ $title }}
         @else
-            NOSH ChartingSystem
+            Simplenote ChartingSystem
         @endif
     </title>
     {!! $assets_css !!}
@@ -50,7 +50,7 @@
 
                 <!-- Branding Image -->
                 <div class="navbar-brand" id="logo" data-toggle="offcanvas">
-                    <i class="fas fa-infinity" style="color:#fff; margin-right:5px;"></i>
+                    <i class="fas fa-infinity mobile-show" style="color:#fff; margin-right:5px;"></i>
                     <span class = "mobile-hide"><span style="color:#fff">Simple</span><span style="color:rgb(174,185,240)">note</span></span>
                 </div>
                 @if (Session::has('pid'))

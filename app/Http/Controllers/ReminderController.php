@@ -12,7 +12,7 @@ use App\Http\Requests;
 class ReminderController extends Controller {
 
 	/**
-	* NOSH ChartingSystem Reminder System, to be run as a cron job
+	* Simplenote ChartingSystem Reminder System, to be run as a cron job
 	*/
 
 	public function reminder()

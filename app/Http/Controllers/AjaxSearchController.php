@@ -21,7 +21,7 @@ use Symfony\Component\Yaml\Yaml;
 class AjaxSearchController extends Controller {
 
     /**
-    * NOSH ChartingSystem Search Ajax Functions
+    * Simplenote ChartingSystem Search Ajax Functions
     */
 
     /**

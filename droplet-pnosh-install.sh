@@ -99,7 +99,7 @@ echo "0 0     * * *   root    $NEWNOSH/noshbackup" >> $NOSHCRON
 echo "30 0    * * 1   root    /usr/local/bin/certbot-auto renew >>  /var/log/le-renew.log" >> $NOSHCRON
 chown root.root $NOSHCRON
 chmod 644 $NOSHCRON
-log_only "Created NOSH ChartingSystem cron scripts."
+log_only "Created Simplenote ChartingSystem cron scripts."
 
 phpenmod imap
 if [ ! -f /usr/local/bin/composer ]; then
@@ -108,10 +108,10 @@ if [ ! -f /usr/local/bin/composer ]; then
 fi
 log_only "Installed composer.phar."
 if [ -d $NOSH_DIR ]; then
-	log_only "The NOSH ChartingSystem documents directory already exists."
+	log_only "The Simplenote ChartingSystem documents directory already exists."
 else
 	mkdir -p $NOSH_DIR
-	log_only "The NOSH ChartingSystem documents directory has been created."
+	log_only "The Simplenote ChartingSystem documents directory has been created."
 fi
 chown -R $WEB_GROUP.$WEB_USER "$NOSH_DIR"
 chmod -R 755 $NOSH_DIR
@@ -128,8 +128,8 @@ if ! [ -d "$NOSH_DIR"/sentfax ]; then
 	mkdir "$NOSH_DIR"/sentfax
 	chown -R $WEB_GROUP.$WEB_USER "$NOSH_DIR"/sentfax
 fi
-log_only "The NOSH ChartingSystem scan and fax directories are secured."
-log_only "The NOSH ChartingSystem documents directory is secured."
+log_only "The Simplenote ChartingSystem scan and fax directories are secured."
+log_only "The Simplenote ChartingSystem documents directory is secured."
 log_only "This installation will create pNOSH (patient NOSH)."
 
 # Build
@@ -166,11 +166,11 @@ chmod -R 777 $NEWNOSH/public
 chmod 777 $NEWNOSH/noshfax
 chmod 777 $NEWNOSH/noshreminder
 chmod 777 $NEWNOSH/noshbackup
-log_only "Installed NOSH ChartingSystem core files."
+log_only "Installed Simplenote ChartingSystem core files."
 echo "create database $MYSQL_DATABASE" | sudo mysql -u $MYSQL_USERNAME -p$MYSQL_PASSWORD
 php artisan migrate:install
 php artisan migrate
-log_only "Installed NOSH ChartingSystem database schema."
+log_only "Installed Simplenote ChartingSystem database schema."
 a2enmod rewrite
 a2enmod ssl
 if [ -e "$WEB_CONF"/nosh2.conf ]; then
@@ -210,7 +210,7 @@ APACHE_CONF="$APACHE_CONF
 	</IfModule>
 </Directory>"
 echo "$APACHE_CONF" >> "$WEB_CONF"/nosh2.conf
-log_only "NOSH ChartingSystem Apache configuration file set."
+log_only "Simplenote ChartingSystem Apache configuration file set."
 log_only "Restarting Apache service."
 $APACHE >> $LOG 2>&1
 
@@ -222,6 +222,6 @@ chmod a+x /usr/local/bin/certbot-auto
 log_only "Let's Encrypt SSL certificate is set."
 
 # Installation completed
-log_only "You can now complete your new installation of NOSH ChartingSystem by browsing to:"
+log_only "You can now complete your new installation of Simplenote ChartingSystem by browsing to:"
 log_only "https://$URL/nosh"
 exit 0

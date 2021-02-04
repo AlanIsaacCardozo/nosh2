@@ -18,7 +18,7 @@ class AjaxChartController extends Controller
 {
 
     /**
-    * NOSH ChartingSystem Chart Ajax Functions
+    * Simplenote ChartingSystem Chart Ajax Functions
     */
 
     /**

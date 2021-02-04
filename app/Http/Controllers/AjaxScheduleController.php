@@ -16,7 +16,7 @@ use URL;
 class AjaxScheduleController extends Controller {
 
     /**
-    * NOSH ChartingSystem Schedule Ajax Functions
+    * Simplenote ChartingSystem Schedule Ajax Functions
     */
 
     /**

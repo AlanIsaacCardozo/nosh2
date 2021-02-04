@@ -17,7 +17,7 @@ use URL;
 class AjaxInstallController extends Controller {
 
     /**
-    * NOSH ChartingSystem Schedule Ajax Functions
+    * Simplenote ChartingSystem Schedule Ajax Functions
     */
 
     /**

@@ -346,7 +346,7 @@ class InstallController extends Controller {
         //     $data['document_upload'] = route('google_start');
         //     $type_arr = ['json'];
         //     $data['document_type'] = json_encode($type_arr);
-        //     $text = "<p>You're' here because you have not installed a Google OAuth2 Client ID file.  You'll need to set this up first before configuring NOSH Charting System.'</p>";
+        //     $text = "<p>You're' here because you have not installed a Google OAuth2 Client ID file.  You'll need to set this up first before configuring Simplenote Charting System.'</p>";
         //     if ($query) {
         //         $dropdown_array['default_button_text'] = '<i class="fa fa-chevron-left fa-fw fa-btn"></i>Back';
         //         $dropdown_array['default_button_text_url'] = route('dashboard');
@@ -746,7 +746,7 @@ class InstallController extends Controller {
             if (array_key_exists('pnosh_email', $_COOKIE)) {
                 $email = $_COOKIE['pnosh_email'];
             }
-            $data['panel_header'] = 'NOSH ChartingSystem Installation';
+            $data['panel_header'] = 'SimplenoteSystem Installation';
             $items[] = [
                 'name' => 'username',
                 'label' => trans('noshform.admin_username'),

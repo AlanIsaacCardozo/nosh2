@@ -32,8 +32,7 @@
 <div class="container" style="margin-bottom:100px">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">{{ trans('nosh.login_heading') }}</div>
+            <div class="panel panel-default" style="border-width:0px">
                 <div class="panel-body">
                     <div style="text-align: center;">
                         <div style="text-align: center;">
@@ -401,7 +400,7 @@
 
 	// Uport
 	const Connect = window.uportconnect;
-	const appName = 'NOSH ChartingSystem';
+	const appName = 'Simplenote ChartingSystem';
 	const uport = new Connect(appName, {
 		network: 'rinkeby'
 	});

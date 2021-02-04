@@ -17,7 +17,7 @@ class APIv1Controller extends Controller
 {
 
 	/**
-	* NOSH ChartingSystem API Functions
+	* Simplenote ChartingSystem API Functions
 	*/
 
 	public function add(Request $request)
@@ -97,7 +97,7 @@ class APIv1Controller extends Controller
 	{
 		if ($request->isMethod('post')) {
 		} else {
-			$this->layout->title = "NOSH ChartingSystem Practice Registration";
+			$this->layout->title = "Simplenote ChartingSystem Practice Registration";
 			$this->layout->style = '';
 			$this->layout->script = HTML::script('/js/practiceregister.js');
 			$this->layout->content = '';
@@ -109,7 +109,7 @@ class APIv1Controller extends Controller
 				$this->layout->content .= View::make('practiceregister', $data)->render();
 			} else {
 				$this->layout->content .= '<strong>Registration link timed out or does not exist!</strong><br>';
-				$this->layout->content .= '<p>' . HTML::linkRoute('login', 'Click here to re-register to NOSH ChartingSystem') . '</p>';
+				$this->layout->content .= '<p>' . HTML::linkRoute('login', 'Click here to re-register to Simplenote ChartingSystem') . '</p>';
 			}
 		}
 	}
