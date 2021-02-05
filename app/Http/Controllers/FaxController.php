@@ -58,7 +58,7 @@ class FaxController extends Controller {
 			if ($request->input('success') == 'true' && $request->input('direction') == 'received') {
 				$received_dir = Storage::path('received/' . $practice_id);
 				if (! file_exists($received_dir)) {
-					mkdir($received_dir, 0777);
+					mkdir($received_dir, 0777, true);
 				}
 				$file = $request->file('filename');
 				$result = json_decode($request->input('fax'), true);
