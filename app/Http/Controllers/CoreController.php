@@ -5724,7 +5724,7 @@ class CoreController extends Controller
             $data['panel_dropdown'] .= '<span class="fa-btn"></span>' . $this->dropdown_build($dropdown_array1);
             $data['content'] = $return;
             $data['panel_header'] = trans('noshform.fax_details') . ' ' . $id;
-            Session::put('messaging_last_page', 'messaging_last_page/'.$id);
+            Session::put('messaging_last_page', 'messaging_sendfax/'.$id);
             $data['assets_js'] = $this->assets_js();
             $data['assets_css'] = $this->assets_css();
             return view('core', $data);
