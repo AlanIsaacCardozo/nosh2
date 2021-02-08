@@ -151,7 +151,7 @@
                                     <a class="" href="{{ url('/password_email') }}">{{ trans('nosh.forgot_password') }}</a>
                                     <br>
                                     @if ($patient_centric == 'n' && $demo == 'n')
-                                        {{ trans('nosh.new_patient_portal') }}<a class="" href="#" id="register">{{ trans('nosh.button_register') }}</a>
+                                        {{ trans('nosh.new_patient_portal') }}<a class="" href="#" id="register"> {{ trans('nosh.button_register') }}</a>
                                     @endif
                                 </div>
                             </div>
