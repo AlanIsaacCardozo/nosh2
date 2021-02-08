@@ -2420,8 +2420,8 @@
                     html = 'No results.';
                     $target.html(html);
                 }else{
-                    $('#createPatientModal .modal-title').append($response.panel_header);
-                    $('#createPatientModal .modal-body').append($response.content);
+                    $('#createPatientModal .modal-title').append(response.panel_header);
+                    $('#createPatientModal .modal-body').append(response.content);
                 }
             });
         });
