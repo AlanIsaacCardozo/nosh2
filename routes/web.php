@@ -59,7 +59,7 @@ Route::post('get_state_data', ['as' => 'get_state_data', 'uses' => 'AjaxInstallC
 
 // Core routes
 Route::get('/', ['as' => 'dashboard', 'uses' => 'CoreController@dashboard']);
-Route::any('add_patient/{is_ajax_call}', ['as' => 'add_patient', 'uses' => 'CoreController@add_patient']);
+Route::any('add_patient', ['as' => 'add_patient', 'uses' => 'CoreController@add_patient']);
 Route::get('addressbook/{type}', ['as' => 'addressbook', 'uses' => 'CoreController@addressbook']);
 Route::get('audit_logs', ['as' => 'audit_logs', 'uses' => 'CoreController@audit_logs']);
 Route::get('billing_list/{type}/{pid}', ['as' => 'billing_list', 'uses' => 'CoreController@billing_list']);
