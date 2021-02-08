@@ -21,7 +21,7 @@ return [
     "organization_practice" => "Organizacion/Practica",
     "remember_me" => "Recuerdame",
     "forgot_password" => "¿Olvidaste tu Contraseña?",
-    "new_patient_portal" => "¿Eres nuevo en el portal de pacientes?",
+    "new_patient_portal" => "o nuevo en el portal del paciente?",
     "instruct_patient_portal1" => "Introduce los siguientes campos para registrarte como un usuario del portal de pacientes.  Es importante que tus respuestas sean exactamente como fueron dadas en tu práctica tal como el deletreo de tu nombre y fecha de nacimiento.",
     "instruct_patient_portal2" => "Si no tiene un código de registro, se enviará una solicitud de registro al administrador de la práctica.",
     "instruct_patient_portal3" => "A continuación, recibirá un código de registro enviado a su dirección de correo electrónico antes de continuar",
@@ -343,6 +343,12 @@ return [
     "encounter_provider" => "Proveedor",
     "encounter_status" => "Estado",
     "encounter_cc" => "Queja principal",
+    "patient_name" => "Nombre del paciente",
+    "practice_name" => "Nombre de la práctica",
+    "address" => "Dirección",
+    "phone" => "Teléfono",
+    "fax" => "Fax",
+    "website" => "Sitio web",
 
     // Image
     "pen_tool" => "Lapicera",

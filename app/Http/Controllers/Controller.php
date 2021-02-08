@@ -4140,6 +4140,7 @@ class Controller extends BaseController
         }
         $encounterInfo = DB::table('encounters')->where('eid', '=', $eid)->first();
         $data['patientInfo'] = DB::table('demographics')->where('pid', '=', $pid)->first();
+        $data['patientName'] = $data['patientInfo']->firstname . ' ' . $data['patientInfo']->lastname;
         $data['eid'] = $eid;
         $data['encounter_DOS'] = date('F jS, Y; h:i A', $this->human_to_unix($encounterInfo->encounter_DOS));
         $data['encounter_provider'] = $encounterInfo->encounter_provider;
@@ -4153,6 +4154,11 @@ class Controller extends BaseController
         $data['gender'] = $gender_arr[$data['patientInfo']->sex];
         $data['encounter_cc'] = nl2br($encounterInfo->encounter_cc);
         $practiceInfo = DB::table('practiceinfo')->where('practice_id', '=', $practice_id)->first();
+        $data['practiceName'] = $practiceInfo->practice_name;
+        $data['address'] = $practiceInfo->street_address1 . ' ' . $practiceInfo->street_address2 . ' ' . $practiceInfo->city . ' ' . $practiceInfo->state . ' ' . $practiceInfo->zip . ' ' . $practiceInfo->country;
+        $data['phone'] = $practiceInfo->phone;
+        $data['fax'] = $practiceInfo->fax;
+        $data['website'] = $practiceInfo->website;
         $data['hpi'] = '';
         $data['ros'] = '';
         $data['oh'] = '';

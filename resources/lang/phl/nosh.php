@@ -21,7 +21,7 @@ return [
     "organization_practice" => "Organization/Practice",
     "remember_me" => "Remember Me",
     "forgot_password" => "Forgot Your Password?",
-    "new_patient_portal" => "Are you new to the Patient Portal?",
+    "new_patient_portal" => "or new to the Patient Portal?",
     "instruct_patient_portal1" => "Enter the following fields to register as a patient portal user.  It is important that your answers are exactly what is provided to your practice such as the spelling of your name and date of birth.",
     "instruct_patient_portal2" => "If you don't have a registration code, a registration request will be sent to the practice administrator.",
     "instruct_patient_portal3" => "You will then receive a registration code sent to your e-mail address before you proceed further.",
@@ -344,6 +344,12 @@ return [
     "encounter_provider" => "Provider",
     "encounter_status" => "Status",
     "encounter_cc" => "Chief Complaint",
+    "patient_name" => "Patient Name",
+    "practice_name" => "Practice Name",
+    "address" => "Address",
+    "phone" => "Phone",
+    "fax" => "Fax",
+    "website" => "Website",
 
     // Image
     "pen_tool" => "Pen Tool",

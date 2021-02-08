@@ -1,3 +1,10 @@
+<strong>{{ trans('nosh.patient_name') }}: </strong>{!! $patientName !!}<br>
+<strong>{{ trans('nosh.practice_name') }}: </strong>{!! $practiceName !!}<br>
+<strong>{{ trans('nosh.address') }}: </strong>{!! $address !!}<br>
+<strong>{{ trans('nosh.phone') }}: </strong>{!! $phone !!}<br>
+<strong>{{ trans('nosh.fax') }}: </strong>{!! $fax !!}<br>
+<strong>{{ trans("nosh.website") }}: </strong> {!! $website !!}<br>
+
 <strong>{{ trans('nosh.encounter_age') }}: </strong>{!! $age1 !!}<br>
 <strong>{{ trans('nosh.encounter_dos') }}: </strong>{!! $encounter_DOS !!}<br>
 <strong>{{ trans('nosh.encounter_provider') }}: </strong>{!! $encounter_provider !!}<br>

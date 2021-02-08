@@ -159,7 +159,7 @@
                     <!-- Authentication Links -->
                     @if (Auth::guest())
                         @if (!isset($noheader))
-                            <li><a href="{{ url('/') }}">{{ trans('nosh.login_heading') }}</a></li>
+                            <!-- <li><a href="{{ url('/') }}">{{ trans('nosh.login_heading') }}</a></li> -->
                         @endif
                     @else
                         @if (Session::has('uma_uri'))
@@ -206,7 +206,57 @@
             </div>
         </div>
     </nav>
-
+    @if (isset($sidebar_content))
+        @if (Session::get('patient_centric') !== 'y' && Session::get('patient_centric') !== 'yp' && Session::get('group_id') != '100')
+            <div style="box-shadow: 0px 1px 5px 1px rgb(0 0 0 / 20%);">
+                <form class="input-group form" border="0" id="search_patient_form" role="search" action="{{ url('search_patient') }}" method="POST" style="margin-bottom:0px;" data-nosh-target="search_patient_results">
+                    <input type="text" class="form-control search" id="search_patient" name="search_patient" placeholder="{{ trans('nosh.search_patient') }}" style="margin-bottom:0px;" required autocomplete="off">
+                    <input type="hidden" name="type" value="div">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-md" id="search_patient_submit" name="submit" value="Go"><i class="glyphicon glyphicon-search"></i></button>
+                    </span>
+                    @if (Session::get('group_id') != '1')
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-md btn-default" id="search_patient_recent" data-toggle="tooltip" data-placement="bottom" title="{{ trans('nosh.recent_patients') }}"><i class="fa fa-history fa-lg"></i></button>
+                        </span>
+                        <span class="input-group-btn">
+                            <a href="{{ route('uma_list') }}" type="button" class="btn btn-md btn-default" data-toggle="tooltip" data-placement="bottom" title="{{ trans('nosh.uma_list') }}"><i class="fa fa-fire fa-lg"></i></a>
+                        </span>
+                        <span class="input-group-btn">
+                            <a id="add_patient" class="btn btn-md btn-default" data-toggle="tooltip" data-placement="bottom" title="{{ trans('nosh.add_patient') }}"><i class="fa fa-plus fa-lg"></i></a>
+                        </span>
+                    @endif
+                </form>
+                <div class="list-group" id="search_patient_results"></div>
+            </div>
+        @endif
+    @else
+        @if (!Auth::guest())
+            @if (Session::get('patient_centric') !== 'y' && Session::get('patient_centric') !== 'yp' && Session::get('group_id') != '100')
+                <div style="box-shadow: 0px 1px 5px 1px rgb(0 0 0 / 20%);">>
+                    <form class="input-group form" border="0" id="search_patient_form" role="search" action="{{ url('search_patient') }}" method="POST" style="margin-bottom:0px;" data-nosh-target="search_patient_results">
+                        <input type="hidden" name="type" value="div">
+                        <input type="text" class="form-control search" id="search_patient" name="search_patient" placeholder="{{ trans('nosh.search_patient') }}" style="margin-bottom:0px;" required autocomplete="off">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-md" id="search_patient_submit" value="Go"><i class="glyphicon glyphicon-search"></i></button>
+                        </span>
+                        @if (Session::get('group_id') != '1')
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-md btn-default" id="search_patient_recent" data-toggle="tooltip" data-placement="bottom" title="{{ trans('nosh.recent_patients') }}"><i class="fa fa-history fa-lg"></i></button>
+                            </span>
+                            <span class="input-group-btn">
+                                <a href="{{ route('uma_list') }}" type="button" class="btn btn-md btn-default" data-toggle="tooltip" data-placement="bottom" title="{{ trans('nosh.uma_list') }}"><i class="fa fa-fire fa-lg"></i></a>
+                            </span>
+                            <span class="input-group-btn">
+                                <a id="add_patient" type="button" class="btn btn-md btn-default" data-toggle="tooltip" data-placement="bottom" title="{{ trans('nosh.add_patient') }}"><i class="fa fa-plus fa-lg"></i></a>
+                            </span>
+                        @endif
+                    </form>
+                    <div class="list-group" id="search_patient_results"></div>
+                </div>
+            @endif
+        @endif
+    @endif
     @if (isset($sidebar_content))
     <div class="row-offcanvas row-offcanvas-left">
         <!-- Sidebar -->
@@ -404,29 +454,6 @@
         </div>
         <div id="main">
             <div class="col-md-12">
-                @if (Session::get('patient_centric') !== 'y' && Session::get('patient_centric') !== 'yp' && Session::get('group_id') != '100')
-                    <div style="margin:15px">
-                        <form class="input-group form" border="0" id="search_patient_form" role="search" action="{{ url('search_patient') }}" method="POST" style="margin-bottom:0px;" data-nosh-target="search_patient_results">
-                            <input type="text" class="form-control search" id="search_patient" name="search_patient" placeholder="{{ trans('nosh.search_patient') }}" style="margin-bottom:0px;" required autocomplete="off">
-                            <input type="hidden" name="type" value="div">
-                            <span class="input-group-btn">
-                                <button type="submit" class="btn btn-md" id="search_patient_submit" name="submit" value="Go"><i class="glyphicon glyphicon-search"></i></button>
-                            </span>
-                            @if (Session::get('group_id') != '1')
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-md btn-default" id="search_patient_recent" data-toggle="tooltip" data-placement="bottom" title="{{ trans('nosh.recent_patients') }}"><i class="fa fa-history fa-lg"></i></button>
-                                </span>
-                                <span class="input-group-btn">
-                                    <a href="{{ route('uma_list') }}" type="button" class="btn btn-md btn-default" data-toggle="tooltip" data-placement="bottom" title="{{ trans('nosh.uma_list') }}"><i class="fa fa-fire fa-lg"></i></a>
-                                </span>
-                                <span class="input-group-btn">
-                                    <a href="{{ route('add_patient') }}" class="btn btn-md btn-default" data-toggle="tooltip" data-placement="bottom" title="{{ trans('nosh.add_patient') }}"><i class="fa fa-plus fa-lg"></i></a>
-                                </span>
-                            @endif
-                        </form>
-                        <div class="list-group" id="search_patient_results"></div>
-                    </div>
-                @endif
                 @yield('content')
             </div>
         </div>
@@ -434,31 +461,6 @@
     @else
     <div id="main">
         <div class="col-md-12">
-            @if (!Auth::guest())
-                @if (Session::get('patient_centric') !== 'y' && Session::get('patient_centric') !== 'yp' && Session::get('group_id') != '100')
-                    <div style="margin:15px">
-                        <form class="input-group form" border="0" id="search_patient_form" role="search" action="{{ url('search_patient') }}" method="POST" style="margin-bottom:0px;" data-nosh-target="search_patient_results">
-                            <input type="hidden" name="type" value="div">
-                            <input type="text" class="form-control search" id="search_patient" name="search_patient" placeholder="{{ trans('nosh.search_patient') }}" style="margin-bottom:0px;" required autocomplete="off">
-                            <span class="input-group-btn">
-                                <button type="submit" class="btn btn-md" id="search_patient_submit" value="Go"><i class="glyphicon glyphicon-search"></i></button>
-                            </span>
-                            @if (Session::get('group_id') != '1')
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-md btn-default" id="search_patient_recent" data-toggle="tooltip" data-placement="bottom" title="{{ trans('nosh.recent_patients') }}"><i class="fa fa-history fa-lg"></i></button>
-                                </span>
-                                <span class="input-group-btn">
-                                    <a href="{{ route('uma_list') }}" type="button" class="btn btn-md btn-default" data-toggle="tooltip" data-placement="bottom" title="{{ trans('nosh.uma_list') }}"><i class="fa fa-fire fa-lg"></i></a>
-                                </span>
-                                <span class="input-group-btn">
-                                    <a href="{{ route('add_patient') }}" type="button" class="btn btn-md btn-default" data-toggle="tooltip" data-placement="bottom" title="{{ trans('nosh.add_patient') }}"><i class="fa fa-plus fa-lg"></i></a>
-                                </span>
-                            @endif
-                        </form>
-                        <div class="list-group" id="search_patient_results"></div>
-                    </div>
-                @endif
-            @endif
             @yield('content')
         </div>
     </div>
@@ -643,6 +645,21 @@
     </div>
     @endif
 
+    @if (Session::get('group_id') != '1')
+    <div class="modal" id="createPatientModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                </div>
+                <div class="modal-body" style="height:80vh;overflow-y:auto;">
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
     <!-- JavaScripts -->
     <script type="text/javascript">
         // Global variables
@@ -680,6 +697,7 @@
             'search_ndc': '<?php echo url("search_ndc"); ?>',
             'search_icd_specific': '<?php echo url("search_icd_specific"); ?>',
             'search_patient_history': '<?php echo url("search_patient_history"); ?>',
+            'add_patient': '<?php echo url("add_patient"); ?>',
             'search_referral_provider': '<?php echo url("search_referral_provider"); ?>',
             'set_ccda_data': '<?php echo url("set_ccda_data"); ?>',
             'tags_url': '<?php echo url("tags"); ?>',
@@ -2387,6 +2405,25 @@
         });
         $(document).on('click', '.print_summary', function(event){
             print_summary();
+        });
+
+        $(document).on('click', '#add_patient', function(event) {
+            $.ajax({
+                type: 'GET',
+                url: noshdata.add_patient,
+                data: 'is_ajax_call=true',
+                dataType: 'json',
+            }).done(function(response) {
+                var $target = $('#createPatientModal');
+                var html = '';
+                if (response == '') {
+                    html = 'No results.';
+                    $target.html(html);
+                }else{
+                    $('#createPatientModal .modal-title').append($response.panel_header);
+                    $('#createPatientModal .modal-body').append($response.content);
+                }
+            });
         });
     </script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}

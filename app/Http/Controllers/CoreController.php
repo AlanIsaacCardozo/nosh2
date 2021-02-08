@@ -126,8 +126,14 @@ class CoreController extends Controller
             $data['content'] = $this->form_build($form_array);
             $data['message_action'] = Session::get('message_action');
             Session::forget('message_action');
+
+            if($_GET['is_ajax_call']){
+                return $data;
+            }
+
             $data['assets_js'] = $this->assets_js();
             $data['assets_css'] = $this->assets_css();
+            
             return view('core', $data);
         }
     }
@@ -178,6 +184,10 @@ class CoreController extends Controller
                 if ($type == 'all') {
                     $arr['label'] .= ' - ' . $row->specialty;
                 }
+                if(!is_null($row->firstname)){
+                    $arr['label'].= '<br> <b>Name : </b>' . $row->firstname . ' ' . $row->lastname;
+                }
+
                 $arr['edit'] = route('core_form', ['addressbook', $row_index, $row->$row_index]);
                 $arr['delete'] = route('core_action', ['table' => 'addressbook', 'action' => 'delete', 'index' => $row_index, 'id' => $row->$row_index]);
                 $list_array[] = $arr;

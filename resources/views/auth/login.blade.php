@@ -30,8 +30,8 @@
 
 @section('content')
 <div class="container" style="margin-bottom:100px">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+    <div class="row flex-row-center">
+        <div class="col-md-4">
             <div class="panel panel-default" style="border-width:0px">
                 <div class="panel-body">
                     <div style="text-align: center;">
@@ -90,9 +90,9 @@
                             {{ csrf_field() }}
 
                             <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
-                                <label for="username" class="col-md-4 control-label">{{ trans('nosh.username') }}</label>
+                                <label for="username" class="control-label">{{ trans('nosh.username') }}</label>
 
-                                <div class="col-md-6">
+                                <div>
                                     <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}">
 
                                     @if ($errors->has('username'))
@@ -104,9 +104,9 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                <label for="password" class="col-md-4 control-label">{{ trans('nosh.password') }}</label>
+                                <label for="password" class="control-label">{{ trans('nosh.password') }}</label>
 
-                                <div class="col-md-6">
+                                <div>
                                     <input id="password" type="password" class="form-control" name="password">
 
                                     @if ($errors->has('password'))
@@ -119,9 +119,9 @@
 
                             @if (isset($practice_list))
                                 <div class="form-group{{ $errors->has('practice_id') ? ' has-error' : '' }}">
-                                    <label for="password" class="col-md-4 control-label"> {{ trans('nosh.organization_practice') }}</label>
+                                    <label for="password" class="control-label"> {{ trans('nosh.organization_practice') }}</label>
 
-                                    <div class="col-md-6">
+                                    <div>
                                         <select id="practice_id" class="form-control" name="practice_id" value="{{ old('practice_id') }}">{!! $practice_list !!}</select>
 
                                         @if ($errors->has('practice_id'))
@@ -134,7 +134,7 @@
                             @endif
 
                             <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
+                                <div>
                                     <div class="checkbox">
                                         <label>
                                             <input type="checkbox" name="remember"> {{ trans('nosh.remember_me') }}
@@ -144,24 +144,25 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
+                                <div class="">
                                     <button type="submit" class="btn btn-primary btn-block">
                                         <i class="fa fa-btn fa-sign-in"></i> {{ trans('nosh.login_heading') }}
                                     </button>
-                                    <a class="btn btn-primary btn-block" href="{{ url('/password_email') }}">{{ trans('nosh.forgot_password') }}</a>
+                                    <a class="" href="{{ url('/password_email') }}">{{ trans('nosh.forgot_password') }}</a>
+                                    <br>
                                     @if ($patient_centric == 'n' && $demo == 'n')
-                                        <a class="btn btn-primary btn-block" href="#" id="register">{{ trans('nosh.new_patient_portal') }}</a>
+                                        {{ trans('nosh.new_patient_portal') }}<a class="" href="#" id="register">{{ trans('nosh.button_register') }}</a>
                                     @endif
                                 </div>
                             </div>
 
-							<div class="form-group">
-								<div class="col-md-6 col-md-offset-4">
+							<!--<div class="form-group">
+								<div>
 									<button type="button" class="btn btn-primary btn-block" id="connectUportBtn" onclick="loginBtnClick()">
 										<img src="{{ asset('assets/uport-logo-white.svg') }}" height="25" width="25" style="margin-right:5px"></img> {{ trans('nosh.login_uport') }}
 									</button>
 								</div>
-							</div>
+							</div>-->
                         </form>
                         @if ($errors->has('registration_code') || $errors->has('lastname') || $errors->has('firstname') || $errors->has('dob') || $errors->has('email') || $errors->has('username1') || $errors->has('numberReal'))
                             <form id="register_form" class="form-horizontal" role="form" method="POST" action="{{ url('register_user') }}">
