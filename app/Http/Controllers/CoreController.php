@@ -5765,7 +5765,7 @@ class CoreController extends Controller
             DB::table('pages')->insert($data);
             $this->audit('Add');
             Session::get('message_action', trans('noshform.messaging_sendfax_upload1'));
-            return redirect(Session::get('last_page'));
+            return redirect(Session::get('messaging_last_page'));
         } else {
             $data['panel_header'] = trans('noshform.messaging_sendfax_upload');
             $data['document_upload'] = route('messaging_sendfax_upload', [$job_id]);
