@@ -374,3 +374,10 @@ form#search_patient_form button, form#search_patient_form a,form#search_patient_
     flex-direction: row;
     justify-content: center;
 }
+
+/*patient name field*/
+#document_process_form #patient_name{
+    width: 100%;
+    pointer-events: none;
+    border: none;
+}

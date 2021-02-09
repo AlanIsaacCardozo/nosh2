@@ -2303,7 +2303,7 @@ class CoreController extends Controller
             $zip->open($zip_file, ZipArchive::CREATE);
             $documents_dir = Storage::path('');
             $database = env('DB_DATABASE') . "_copy";
-            $connect = mysqli_connect('localhost', env('DB_USERNAME'), env('DB_PASSWORD'));
+            $connect = mysqli_connect('127.0.0.1', env('DB_USERNAME'), env('DB_PASSWORD'));
             if ($connect) {
                 if (mysqli_select_db($connect, $database)) {
                     $sql = "DROP DATABASE " . $database;
@@ -5401,6 +5401,9 @@ class CoreController extends Controller
             $pid = $request->input('pid');
             $patient = DB::table('demographics')->where('pid', '=', $pid)->first();
             $directory = Storage::path($pid);
+            if(!is_dir($directory)){
+                mkdir($directory, 0777, true);
+            }
             $new_file_path = $directory . "/" . $name . '_new.pdf';
             copy($file_path, $new_file_path);
             $pages_data2 = [
@@ -5489,7 +5492,7 @@ class CoreController extends Controller
             if (Session::has('messaging_last_page')) {
                 $origin = Session::get('messaging_last_page');
             }
-            $intro = '<div class="form-group" id="patient_name_div"><label class="col-md-3 control-label">' . trans('noshform.patient') . '</label><div class="col-md-8"><p class="form-control-static" id="patient_name"></p></div></div>';
+            $intro = '<div class="form-group" id="patient_name_div"><label class="col-md-3 control-label">' . trans('noshform.patient') . '</label><div class="col-md-8"><input class="form-control-static" required id="patient_name"></input></div></div>';
             $add_save['download'] = trans('noshform.save_download');
             $practice = DB::table('practiceinfo')->where('practice_id', '=', Session::get('practice_id'))->first();
             if ($practice->fax_type !== '') {
