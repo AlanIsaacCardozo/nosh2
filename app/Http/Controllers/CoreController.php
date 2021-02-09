@@ -5097,7 +5097,7 @@ class CoreController extends Controller
             $return .= ' ' . trans('noshform.none') . '.';
         }
         $data['content'] = $return;
-        $data['panel_header'] = trans('noshform.messaging') . 'Count : ' . $count;
+        $data['panel_header'] = trans('noshform.messaging') . ' - Count : ' . $count;
         Session::put('last_page', $request->fullUrl());
         if (Session::has('download_now')) {
             $data['download_now'] = route('download_now');
