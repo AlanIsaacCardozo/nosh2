@@ -4908,6 +4908,7 @@ class CoreController extends Controller
         Session::forget('messaging_add_photo');
         $practice = DB::table('practiceinfo')->where('practice_id', '=', Session::get('practice_id'))->first();
         $return = '';
+        $count = 0;
         $type_arr = [
             'inbox' => [trans('noshform.inbox'), 'fa-inbox'],
             'drafts' => [trans('noshform.drafts'), 'fa-pencil-square-o'],
@@ -4948,6 +4949,7 @@ class CoreController extends Controller
             $columns = Schema::getColumnListing('messaging');
             $row_index = $columns[0];
             if ($query->count()) {
+                $count = $query->count();
                 foreach ($query as $row) {
                     $arr = [];
                     $user = DB::table('users')->where('id', '=', $row->message_from)->first();
@@ -4966,6 +4968,7 @@ class CoreController extends Controller
             $columns = Schema::getColumnListing('messaging');
             $row_index = $columns[0];
             if ($query->count()) {
+                $count = $query->count();
                 foreach ($query as $row) {
                     $arr = [];
                     $arr['label'] = '<b>' . str_replace(';', '; ', $row->message_to) . '</b> - ' . $row->subject . ' - ' . date('Y-m-d', $this->human_to_unix($row->date));
@@ -4980,6 +4983,7 @@ class CoreController extends Controller
             $columns = Schema::getColumnListing('messaging');
             $row_index = $columns[0];
             if ($query->count()) {
+                $count = $query->count();
                 foreach ($query as $row) {
                     $arr = [];
                     $arr['label'] = '<b>' . str_replace(';', '; ', $row->message_to) . '</b> - ' . $row->subject . ' - ' . date('Y-m-d', $this->human_to_unix($row->date));
@@ -5010,6 +5014,7 @@ class CoreController extends Controller
             $columns = Schema::getColumnListing('received');
             $row_index = $columns[0];
             if ($query->count()) {
+                $count = $query->count();
                 foreach ($query as $row) {
                     $arr = [];
                     $arr['label'] = '<b>' . $row->fileFrom . '</b> - ' . date('Y-m-d H:i:s', $this->human_to_unix($row->fileDateTime));
@@ -5025,6 +5030,7 @@ class CoreController extends Controller
             $columns = Schema::getColumnListing('sendfax');
             $row_index = $columns[0];
             if ($query->count()) {
+                $count = $query->count();
                 foreach ($query as $row) {
                     $arr = [];
                     $arr['label'] = '<b>' . $row->job_id . '</b> - ' . $row->faxsubject;
@@ -5038,6 +5044,7 @@ class CoreController extends Controller
             $columns = Schema::getColumnListing('sendfax');
             $row_index = $columns[0];
             if ($query->count()) {
+                $count = $query->count();
                 foreach ($query as $row) {
                     $fax_to = '';
                     $recipients = DB::table('recipients')->where('job_id', '=', $row->job_id)->get();
@@ -5073,6 +5080,7 @@ class CoreController extends Controller
             $columns = Schema::getColumnListing('scans');
             $row_index = $columns[0];
             if ($query->count()) {
+                $count = $query->count();
                 foreach ($query as $row) {
                     $arr = [];
                     $arr['label'] = '<b>' . $row->fileName . '</b> - ' . date('Y-m-d H:i:s', $this->human_to_unix($row->fileDateTime));
@@ -5089,7 +5097,7 @@ class CoreController extends Controller
             $return .= ' ' . trans('noshform.none') . '.';
         }
         $data['content'] = $return;
-        $data['panel_header'] = trans('noshform.messaging');
+        $data['panel_header'] = trans('noshform.messaging') . 'Count : ' . $count;
         Session::put('last_page', $request->fullUrl());
         if (Session::has('download_now')) {
             $data['download_now'] = route('download_now');
