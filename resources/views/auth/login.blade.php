@@ -31,7 +31,11 @@
 @section('content')
 <div class="container" style="margin-bottom:100px">
     <div class="row flex-row-center">
+        @if($login)
         <div class="col-md-4">
+        @else
+        <div class="col-md-8">
+        @endif
             <div class="panel panel-default" style="border-width:0px">
                 <div class="panel-body">
                     <div style="text-align: center;">
