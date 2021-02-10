@@ -2311,7 +2311,7 @@ class CoreController extends Controller
                 }
                 $sql = "CREATE DATABASE " . $database;
                 if (mysqli_query($connect,$sql)) {
-                    $command = "mysqldump --no-data -u " . env('DB_USERNAME') . " -p". env('DB_PASSWORD') . " " . env('DB_DATABASE') . " | mysql -u " . env('DB_USERNAME') . " -p". env('DB_PASSWORD') . " " . $database;
+                    $command = "mysqldump -h " . env('DB_HOST') . " --no-data -u " . env('DB_USERNAME') . " -p". env('DB_PASSWORD') . " " . env('DB_DATABASE') . " | mysql -h " . env('DB_HOST') . " -u " . env('DB_USERNAME') . " -p". env('DB_PASSWORD') . " " . $database;
                     system($command);
                     Schema::connection('mysql2')->drop('audit');
                     Schema::connection('mysql2')->drop('ci_sessions');
