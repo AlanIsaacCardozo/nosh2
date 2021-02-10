@@ -2303,7 +2303,7 @@ class CoreController extends Controller
             $zip->open($zip_file, ZipArchive::CREATE);
             $documents_dir = Storage::path('');
             $database = env('DB_DATABASE') . "_copy";
-            $connect = mysqli_connect('127.0.0.1', env('DB_USERNAME'), env('DB_PASSWORD'), 'mysql2');
+            $connect = mysqli_connect('127.0.0.1', 'root', '0327b8d80dce6392ba242e85207ae2fe');
             if ($connect) {
                 if (mysqli_select_db($connect, $database)) {
                     $sql = "DROP DATABASE " . $database;
