@@ -2310,7 +2310,7 @@ class CoreController extends Controller
                 //     $sql = "DROP DATABASE " . $database;
                 //     mysqli_query($connect,$sql);
                 // }
-                if($connect->select($database)){
+                if($connect){
                     $sql = "DROP DATABASE " . $database;
                     DB::statement($sql);
                 }
