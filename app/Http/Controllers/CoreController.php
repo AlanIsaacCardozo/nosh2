@@ -2310,7 +2310,7 @@ class CoreController extends Controller
                 //     $sql = "DROP DATABASE " . $database;
                 //     mysqli_query($connect,$sql);
                 // }
-                foreach(DB::select('SHOW TABLES') as $table){
+                foreach($connect->select('SHOW TABLES') as $table){
                     $table_array = get_object_vars($table);
                     Schema::connection('mysql2')->drop($table_array[key($table_array)]);
                 }
