@@ -2312,7 +2312,7 @@ class CoreController extends Controller
                 // }
                 foreach(DB::select('SHOW TABLES') as $table){
                     $table_array = get_object_vars($table);
-                    Schema::drop($table_array[key($table_array)]);
+                    Schema::connection('mysql2')->drop($table_array[key($table_array)]);
                 }
                 $sql = "CREATE DATABASE " . $database;
                 // if (mysqli_query($connect,$sql)) {
