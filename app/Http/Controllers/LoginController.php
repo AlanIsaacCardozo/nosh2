@@ -452,7 +452,6 @@ class LoginController extends Controller {
                         $version = $this->github_all();
                         $data['noshversion'] = $version[0]['sha'];
                     }
-                    $data['login']=true;
                     return view('auth.login', $data);
                 } else {
                     // Not installed yet, go to install page

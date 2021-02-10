@@ -31,13 +31,9 @@
 @section('content')
 <div class="container" style="margin-bottom:100px">
     <div class="row flex-row-center">
-        @if($login)
-        <div class="col-md-4">
-        @else
         <div class="col-md-8">
-        @endif
             <div class="panel panel-default" style="border-width:0px">
-                <div class="panel-body">
+                <div class="panel-body flex-row-center">
                     <div style="text-align: center;">
                         <div style="text-align: center;">
                             <div id="login_practice_logo">
@@ -87,9 +83,9 @@
                     @endif
                     @if (isset($login_form))
                         @if ($login_form == 'y')
-                            <form id="login_form" class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
+                            <form id="login_form" class="form-horizontal col-md-6" role="form" method="POST" action="{{ url('/login') }}">
                         @else
-                            <form id="login_form" class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}" style="display:none;">
+                            <form id="login_form" class="form-horizontal col-md-6" role="form" method="POST" action="{{ url('/login') }}" style="display:none;">
                         @endif
                             {{ csrf_field() }}
 
