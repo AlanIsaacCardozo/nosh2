@@ -2303,20 +2303,14 @@ class CoreController extends Controller
             $zip->open($zip_file, ZipArchive::CREATE);
             $documents_dir = Storage::path('');
             $database = env('DB_DATABASE') . "_copy";
-            // $connect = mysqli_connect('localhost', env('DB_USERNAME'), env('DB_PASSWORD'));
-            $connect = DB::connection('mysql2');
+            $connect = mysqli_connect('localhost', env('DB_USERNAME'), env('DB_PASSWORD'));
             if ($connect) {
-                // if (mysqli_select_db($connect, $database)) {
-                //     $sql = "DROP DATABASE " . $database;
-                //     mysqli_query($connect,$sql);
-                // }
-                foreach($connect->select('SHOW TABLES') as $table){
-                    $table_array = get_object_vars($table);
-                    Schema::connection('mysql2')->drop($table_array[key($table_array)]);
+                if (mysqli_select_db($connect, $database)) {
+                    $sql = "DROP DATABASE " . $database;
+                    mysqli_query($connect,$sql);
                 }
                 $sql = "CREATE DATABASE " . $database;
-                // if (mysqli_query($connect,$sql)) {
-                if( DB::statement($sql)){
+                if (mysqli_query($connect,$sql)) {
                     $command = "mysqldump --no-data -u " . env('DB_USERNAME') . " -p". env('DB_PASSWORD') . " " . env('DB_DATABASE') . " | mysql -u " . env('DB_USERNAME') . " -p". env('DB_PASSWORD') . " " . $database;
                     system($command);
                     Schema::connection('mysql2')->drop('audit');
@@ -2355,7 +2349,7 @@ class CoreController extends Controller
                     $practiceinfo = DB::table('practiceinfo')->where('practice_id', '=', Session::get('practice_id'))->first();
                     $practiceinfo_data = (array) $practiceinfo;
                     $practiceinfo_data['practice_id'] = '1';
-                    $connect->table('practiceinfo')->insert($practiceinfo_data);
+                    DB::connection('mysql2')->table('practiceinfo')->insert($practiceinfo_data);
                     if ($practiceinfo->practice_logo != '') {
                         $practice_logo_file = public_path() . '/assets/images/' . $practiceinfo->practice_logo;
                         $localPath4 = str_replace($documents_dir,'/',$practice_logo_file);
@@ -2366,58 +2360,58 @@ class CoreController extends Controller
                     $addressbook = DB::table('addressbook')->get();
                     if ($addressbook->count()) {
                         foreach ($addressbook as $addressbook_row) {
-                            $connect->table('addressbook')->insert((array) $addressbook_row);
+                            DB::connection('mysql2')->table('addressbook')->insert((array) $addressbook_row);
                         }
                     }
                     $calendar = DB::table('calendar')->where('practice_id', '=', Session::get('practice_id'))->get();
                     if ($calendar->count()) {
                         foreach ($calendar as $calendar_row) {
-                            $connect->table('calendar')->insert((array) $calendar_row);
+                            DB::connection('mysql2')->table('calendar')->insert((array) $calendar_row);
                         }
                     }
-                    $connect->table('calendar')->update(['practice_id' => '1']);
+                    DB::connection('mysql2')->table('calendar')->update(['practice_id' => '1']);
                     $cpt_relate = DB::table('cpt_relate')->where('practice_id', '=', Session::get('practice_id'))->get();
                     if ($cpt_relate->count()) {
                         foreach ($cpt_relate as $cpt_relate_row) {
-                            $connect->table('cpt_relate')->insert((array) $cpt_relate_row);
+                            DB::connection('mysql2')->table('cpt_relate')->insert((array) $cpt_relate_row);
                         }
                     }
-                    $connect->table('cpt_relate')->update(['practice_id' => '1']);
+                    DB::connection('mysql2')->table('cpt_relate')->update(['practice_id' => '1']);
                     $pid_arr = [];
                     $demographics_relate = DB::table('demographics_relate')->where('practice_id', '=', Session::get('practice_id'))->get();
                     if ($demographics_relate) {
                         foreach ($demographics_relate as $demographics_relate_row) {
-                            $connect->table('demographics_relate')->insert((array) $demographics_relate_row);
+                            DB::connection('mysql2')->table('demographics_relate')->insert((array) $demographics_relate_row);
                             $pid_arr[] = $demographics_relate_row->pid;
                         }
                     }
-                    $connect->table('demographics_relate')->update(['practice_id' => '1']);
+                    DB::connection('mysql2')->table('demographics_relate')->update(['practice_id' => '1']);
                     $era = DB::table('era')->where('practice_id', '=', Session::get('practice_id'))->get();
                     if ($era->count()) {
                         foreach ($era as $era_row) {
-                            $connect->table('era')->insert((array) $era_row);
+                            DB::connection('mysql2')->table('era')->insert((array) $era_row);
                         }
                     }
-                    $connect->table('era')->update(['practice_id' => '1']);
+                    DB::connection('mysql2')->table('era')->update(['practice_id' => '1']);
                     $messaging = DB::table('messaging')->where('practice_id', '=', Session::get('practice_id'))->get();
                     if ($messaging->count()) {
                         foreach ($messaging as $messaging_row) {
-                            $connect->table('messaging')->insert((array) $messaging_row);
+                            DB::connection('mysql2')->table('messaging')->insert((array) $messaging_row);
                         }
                     }
-                    $connect->table('messaging')->update(['practice_id' => '1']);
+                    DB::connection('mysql2')->table('messaging')->update(['practice_id' => '1']);
                     $orderslist = DB::table('orderslist')->where('practice_id', '=', Session::get('practice_id'))->get();
                     if ($orderslist->count()) {
                         foreach ($orderslist as $orderslist_row) {
-                            $connect->table('orderslist')->insert((array) $orderslist_row);
+                            DB::connection('mysql2')->table('orderslist')->insert((array) $orderslist_row);
                         }
                     }
-                    $connect->table('orderslist')->update(['practice_id' => '1']);
+                    DB::connection('mysql2')->table('orderslist')->update(['practice_id' => '1']);
                     $provider_id_arr = [];
                     $providers = DB::table('providers')->where('practice_id', '=', Session::get('practice_id'))->get();
                     if ($providers->count()) {
                         foreach ($providers as $providers_row) {
-                            $connect->table('providers')->insert((array) $providers_row);
+                            DB::connection('mysql2')->table('providers')->insert((array) $providers_row);
                             $provider_id_arr[] = $providers_row->id;
                             if ($providers_row->signature != '') {
                                 $signature_file = $providers_row->signature;
@@ -2428,18 +2422,18 @@ class CoreController extends Controller
                             }
                         }
                     }
-                    $connect->table('providers')->update(['practice_id' => '1']);
+                    DB::connection('mysql2')->table('providers')->update(['practice_id' => '1']);
                     $procedurelist = DB::table('procedurelist')->where('practice_id', '=', Session::get('practice_id'))->get();
                     if ($procedurelist->count()) {
                         foreach ($procedurelist as $procedurelist_row) {
-                            $connect->table('procedurelist')->insert((array) $procedurelist_row);
+                            DB::connection('mysql2')->table('procedurelist')->insert((array) $procedurelist_row);
                         }
                     }
-                    $connect->table('procedurelist')->update(['practice_id' => '1']);
+                    DB::connection('mysql2')->table('procedurelist')->update(['practice_id' => '1']);
                     $received = DB::table('received')->where('practice_id', '=', Session::get('practice_id'))->get();
                     if ($received->count()) {
                         foreach ($received as $received_row) {
-                            $connect->table('received')->insert((array) $received_row);
+                            DB::connection('mysql2')->table('received')->insert((array) $received_row);
                             if ($received_row->filePath != '') {
                                 $localPath3 = str_replace($documents_dir,'/',$received_row->filePath);
                                 if (file_exists($received_row->filePath)) {
@@ -2448,11 +2442,11 @@ class CoreController extends Controller
                             }
                         }
                     }
-                    $connect->table('received')->update(['practice_id' => '1']);
+                    DB::connection('mysql2')->table('received')->update(['practice_id' => '1']);
                     $scans = DB::table('scans')->where('practice_id', '=', Session::get('practice_id'))->get();
                     if ($scans->count()) {
                         foreach ($scans as $scans_row) {
-                            $connect->table('scans')->insert((array) $scans_row);
+                            DB::connection('mysql2')->table('scans')->insert((array) $scans_row);
                             if ($scans_row->filePath != '') {
                                 $localPath2 = str_replace($documents_dir,'/',$scans_row->filePath);
                                 if (file_exists($scans_row->filePath)) {
@@ -2461,185 +2455,185 @@ class CoreController extends Controller
                             }
                         }
                     }
-                    $connect->table('scans')->update(['practice_id' => '1']);
+                    DB::connection('mysql2')->table('scans')->update(['practice_id' => '1']);
                     $job_id_arr = [];
                     $sendfax = DB::table('sendfax')->where('practice_id', '=', Session::get('practice_id'))->get();
                     if ($sendfax->count()) {
                         foreach ($sendfax as $sendfax_row) {
-                            $connect->table('sendfax')->insert((array) $sendfax_row);
+                            DB::connection('mysql2')->table('sendfax')->insert((array) $sendfax_row);
                             $job_id_arr[] = $sendfax_row->job_id;
                         }
                     }
-                    $connect->table('sendfax')->update(['practice_id' => '1']);
+                    DB::connection('mysql2')->table('sendfax')->update(['practice_id' => '1']);
                     $supplement_inventory = DB::table('supplement_inventory')->where('practice_id', '=', Session::get('practice_id'))->get();
                     if ($supplement_inventory->count()) {
                         foreach ($supplement_inventory as $supplement_inventory_row) {
-                            $connect->table('supplement_inventory')->insert((array) $supplement_inventory_row);
+                            DB::connection('mysql2')->table('supplement_inventory')->insert((array) $supplement_inventory_row);
                         }
                     }
-                    $connect->table('supplement_inventory')->update(['practice_id' => '1']);
+                    DB::connection('mysql2')->table('supplement_inventory')->update(['practice_id' => '1']);
                     $tags_id_arr = [];
                     $tags_relate = DB::table('tags_relate')->where('practice_id', '=', Session::get('practice_id'))->get();
                     if ($tags_relate->count()) {
                         foreach ($tags_relate as $tags_relate_row) {
-                            $connect->table('tags_relate')->insert((array) $tags_relate_row);
+                            DB::connection('mysql2')->table('tags_relate')->insert((array) $tags_relate_row);
                             $tags_id_arr[] = $tags_relate_row->tags_id;
                         }
                     }
-                    $connect->table('tags_relate')->update(['practice_id' => '1']);
+                    DB::connection('mysql2')->table('tags_relate')->update(['practice_id' => '1']);
                     $templates = DB::table('templates')->where('practice_id', '=', Session::get('practice_id'))->get();
                     if ($templates->count()) {
                         foreach ($templates as $templates_row) {
-                            $connect->table('templates')->insert((array) $templates_row);
+                            DB::connection('mysql2')->table('templates')->insert((array) $templates_row);
                         }
                     }
-                    $connect->table('templates')->update(['practice_id' => '1']);
+                    DB::connection('mysql2')->table('templates')->update(['practice_id' => '1']);
                     $users = DB::table('users')->where('practice_id', '=', Session::get('practice_id'))->get();
                     if ($users->count()) {
                         foreach ($users as $users_row) {
-                            $connect->table('users')->insert((array) $users_row);
+                            DB::connection('mysql2')->table('users')->insert((array) $users_row);
                         }
                     }
-                    $connect->table('users')->update(['practice_id' => '1']);
+                    DB::connection('mysql2')->table('users')->update(['practice_id' => '1']);
                     $vaccine_inventory = DB::table('vaccine_inventory')->where('practice_id', '=', Session::get('practice_id'))->get();
                     if ($vaccine_inventory) {
                         foreach ($vaccine_inventory as $vaccine_inventory_row) {
-                            $connect->table('vaccine_inventory')->insert((array) $vaccine_inventory_row);
+                            DB::connection('mysql2')->table('vaccine_inventory')->insert((array) $vaccine_inventory_row);
                         }
                     }
-                    $connect->table('vaccine_inventory')->update(['practice_id' => '1']);
+                    DB::connection('mysql2')->table('vaccine_inventory')->update(['practice_id' => '1']);
                     $vaccine_temp = DB::table('vaccine_temp')->where('practice_id', '=', Session::get('practice_id'))->get();
                     if ($vaccine_temp->count()) {
                         foreach ($vaccine_temp as $vaccine_temp_row) {
-                            $connect->table('vaccine_temp')->insert((array) $vaccine_temp_row);
+                            DB::connection('mysql2')->table('vaccine_temp')->insert((array) $vaccine_temp_row);
                         }
                     }
-                    $connect->table('vaccine_temp')->update(['practice_id' => '1']);
+                    DB::connection('mysql2')->table('vaccine_temp')->update(['practice_id' => '1']);
                     File::put(public_path() . '/temp/' . $track_id, '20');
                     if (!empty($pid_arr)) {
                         $i = 0;
                         $pid_count = count($pid_arr);
                         foreach ($pid_arr as $pid) {
                             $demographics = DB::table('demographics')->where('pid', '=', $pid)->first();
-                            $connect->table('demographics')->insert((array) $demographics);
+                            DB::connection('mysql2')->table('demographics')->insert((array) $demographics);
                             $alerts = DB::table('alerts')->where('pid', '=', $pid)->where('practice_id', '=', Session::get('practice_id'))->get();
                             if ($alerts->count()) {
                                 foreach ($alerts as $alerts_row) {
-                                    $connect->table('alerts')->insert((array) $alerts_row);
+                                    DB::connection('mysql2')->table('alerts')->insert((array) $alerts_row);
                                 }
-                                $connect->table('alerts')->update(['practice_id' => '1']);
+                                DB::connection('mysql2')->table('alerts')->update(['practice_id' => '1']);
                             }
                             $allergies = DB::table('allergies')->where('pid', '=', $pid)->get();
                             if ($allergies->count()) {
                                 foreach ($allergies as $allergies_row) {
-                                    $connect->table('allergies')->insert((array) $allergies_row);
+                                    DB::connection('mysql2')->table('allergies')->insert((array) $allergies_row);
                                 }
                             }
                             $billing_core1 = DB::table('billing_core')->where('pid', '=', $pid)->where('eid', '=', '0')->where('practice_id', '=', Session::get('practice_id'))->get();
                             if ($billing_core1->count()) {
                                 foreach ($billing_core1 as $billing_core1_row) {
-                                    $connect->table('billing_core')->insert((array) $billing_core1_row);
+                                    DB::connection('mysql2')->table('billing_core')->insert((array) $billing_core1_row);
                                 }
-                                $connect->table('billing_core')->update(['practice_id' => '1']);
+                                DB::connection('mysql2')->table('billing_core')->update(['practice_id' => '1']);
                             }
                             $demographics_notes = DB::table('demographics_notes')->where('pid', '=', $pid)->where('practice_id', '=', Session::get('practice_id'))->get();
                             if ($demographics_notes->count()) {
                                 foreach ($demographics_notes as $demographics_notes_row) {
-                                    $connect->table('demographics_notes')->insert((array) $demographics_notes_row);
+                                    DB::connection('mysql2')->table('demographics_notes')->insert((array) $demographics_notes_row);
                                 }
-                                $connect->table('demographics_notes')->update(['practice_id' => '1']);
+                                DB::connection('mysql2')->table('demographics_notes')->update(['practice_id' => '1']);
                             }
                             $documents = DB::table('documents')->where('pid', '=', $pid)->get();
                             if ($documents->count()) {
                                 foreach ($documents as $documents_row) {
-                                    $connect->table('documents')->insert((array) $documents_row);
+                                    DB::connection('mysql2')->table('documents')->insert((array) $documents_row);
                                 }
                             }
                             $eid_arr = [];
                             $encounters = DB::table('encounters')->where('pid', '=', $pid)->where('practice_id', '=', Session::get('practice_id'))->get();
                             if ($encounters->count()) {
                                 foreach ($encounters as $encounters_row) {
-                                    $connect->table('encounters')->insert((array) $encounters_row);
+                                    DB::connection('mysql2')->table('encounters')->insert((array) $encounters_row);
                                     $eid_arr[] = $encounters_row->eid;
                                 }
-                                $connect->table('encounters')->update(['practice_id' => '1']);
+                                DB::connection('mysql2')->table('encounters')->update(['practice_id' => '1']);
                             }
                             $forms = DB::table('forms')->where('pid', '=', $pid)->get();
                             if ($forms->count()) {
                                 foreach ($forms as $forms_row) {
-                                    $connect->table('forms')->insert((array) $forms_row);
+                                    DB::connection('mysql2')->table('forms')->insert((array) $forms_row);
                                 }
                             }
                             $hippa = DB::table('hippa')->where('pid', '=', $pid)->where('practice_id', '=', Session::get('practice_id'))->get();
                             if ($hippa->count()) {
                                 foreach ($hippa as $hippa_row) {
-                                    $connect->table('hippa')->insert((array) $hippa_row);
+                                    DB::connection('mysql2')->table('hippa')->insert((array) $hippa_row);
                                 }
-                                $connect->table('hippa')->update(['practice_id' => '1']);
+                                DB::connection('mysql2')->table('hippa')->update(['practice_id' => '1']);
                             }
                             $hippa_request = DB::table('hippa_request')->where('pid', '=', $pid)->where('practice_id', '=', Session::get('practice_id'))->get();
                             if ($hippa_request->count()) {
                                 foreach ($hippa_request as $hippa_request_row) {
-                                    $connect->table('hippa_request')->insert((array) $hippa_request_row);
+                                    DB::connection('mysql2')->table('hippa_request')->insert((array) $hippa_request_row);
                                 }
-                                $connect->table('hippa_request')->update(['practice_id' => '1']);
+                                DB::connection('mysql2')->table('hippa_request')->update(['practice_id' => '1']);
                             }
                             $immunizations = DB::table('immunizations')->where('pid', '=', $pid)->get();
                             if ($immunizations->count()) {
                                 foreach ($immunizations as $immunizations_row) {
-                                    $connect->table('immunizations')->insert((array) $immunizations_row);
+                                    DB::connection('mysql2')->table('immunizations')->insert((array) $immunizations_row);
                                 }
                             }
                             $insurance = DB::table('insurance')->where('pid', '=', $pid)->get();
                             if ($insurance->count()) {
                                 foreach ($insurance as $insurance_row) {
-                                    $connect->table('insurance')->insert((array) $insurance_row);
+                                    DB::connection('mysql2')->table('insurance')->insert((array) $insurance_row);
                                 }
                             }
                             $issues = DB::table('issues')->where('pid', '=', $pid)->get();
                             if ($issues->count()) {
                                 foreach ($issues as $issues_row) {
-                                    $connect->table('issues')->insert((array) $issues_row);
+                                    DB::connection('mysql2')->table('issues')->insert((array) $issues_row);
                                 }
                             }
                             $mtm = DB::table('mtm')->where('pid', '=', $pid)->where('practice_id', '=', Session::get('practice_id'))->get();
                             if ($mtm->count()) {
                                 foreach ($mtm as $mtm_row) {
-                                    $connect->table('mtm')->insert((array) $mtm_row);
+                                    DB::connection('mysql2')->table('mtm')->insert((array) $mtm_row);
                                 }
-                                $connect->table('mtm')->update(['practice_id' => '1']);
+                                DB::connection('mysql2')->table('mtm')->update(['practice_id' => '1']);
                             }
                             $orders = DB::table('orders')->where('pid', '=', $pid)->get();
                             if ($orders->count()) {
                                 foreach ($orders as $orders_row) {
-                                    $connect->table('orders')->insert((array) $orders_row);
+                                    DB::connection('mysql2')->table('orders')->insert((array) $orders_row);
                                 }
                             }
                             $rx_list = DB::table('rx_list')->where('pid', '=', $pid)->get();
                             if ($rx_list->count()) {
                                 foreach ($rx_list as $rx_list_row) {
-                                    $connect->table('rx_list')->insert((array) $rx_list_row);
+                                    DB::connection('mysql2')->table('rx_list')->insert((array) $rx_list_row);
                                 }
                             }
                             $sup_list = DB::table('sup_list')->where('pid', '=', $pid)->get();
                             if ($sup_list->count()) {
                                 foreach ($sup_list as $sup_list_row) {
-                                    $connect->table('sup_list')->insert((array) $sup_list_row);
+                                    DB::connection('mysql2')->table('sup_list')->insert((array) $sup_list_row);
                                 }
                             }
                             $tests = DB::table('tests')->where('pid', '=', $pid)->where('practice_id', '=', Session::get('practice_id'))->get();
                             if ($tests->count()) {
                                 foreach ($tests as $tests_row) {
-                                    $connect->table('tests')->insert((array) $tests_row);
+                                    DB::connection('mysql2')->table('tests')->insert((array) $tests_row);
                                 }
-                                $connect->table('tests')->update(['practice_id' => '1']);
+                                DB::connection('mysql2')->table('tests')->update(['practice_id' => '1']);
                             }
                             $t_messages = DB::table('t_messages')->where('pid', '=', $pid)->where('practice_id', '=', Session::get('practice_id'))->get();
                             if ($t_messages->count()) {
                                 foreach ($t_messages as $t_messages_row) {
-                                    $connect->table('t_messages')->insert((array) $t_messages_row);
+                                    DB::connection('mysql2')->table('t_messages')->insert((array) $t_messages_row);
                                 }
-                                $connect->table('t_messages')->update(['practice_id' => '1']);
+                                DB::connection('mysql2')->table('t_messages')->update(['practice_id' => '1']);
                             }
                             $rootPath = realpath($documents_dir . $pid);
                             if (file_exists($rootPath)) {
@@ -2670,7 +2664,7 @@ class CoreController extends Controller
                             $repeat_schedule = DB::table('repeat_schedule')->where('provider_id', '=', $provider_id)->get();
                             if ($repeat_schedule->count()) {
                                 foreach ($repeat_schedule as $repeat_schedule_row) {
-                                    $connect->table('repeat_schedule')->insert((array) $repeat_schedule_row);
+                                    DB::connection('mysql2')->table('repeat_schedule')->insert((array) $repeat_schedule_row);
                                 }
                             }
                         }
@@ -2680,13 +2674,13 @@ class CoreController extends Controller
                             $pages = DB::table('pages')->where('job_id', '=', $job_id)->get();
                             if ($pages->count()) {
                                 foreach ($pages as $pages_row) {
-                                    $connect->table('pages')->insert((array) $pages_row);
+                                    DB::connection('mysql2')->table('pages')->insert((array) $pages_row);
                                 }
                             }
                             $recipients = DB::table('recipients')->where('job_id', '=', $job_id)->get();
                             if ($recipients->count()) {
                                 foreach ($recipients as $recipients_row) {
-                                    $connect->table('recipients')->insert((array) $recipients_row);
+                                    DB::connection('mysql2')->table('recipients')->insert((array) $recipients_row);
                                 }
                             }
                             $rootPath1 = realpath($documents_dir . 'sentfax/' . $job_id);
@@ -2715,9 +2709,9 @@ class CoreController extends Controller
                             $tags = DB::table('tags')->where('tags_id', '=', $tags_id)->get();
                             if ($tags->count()) {
                                 foreach ($tags as $tags_row) {
-                                    $tagstest = $connect->table('tags')->where('tags_id', '=', $tags_id)->first();
+                                    $tagstest = DB::connection('mysql2')->table('tags')->where('tags_id', '=', $tags_id)->first();
                                     if (!$tagstest) {
-                                        $connect->table('tags')->insert((array) $tags_row);
+                                        DB::connection('mysql2')->table('tags')->insert((array) $tags_row);
                                     }
                                 }
                             }
@@ -2729,60 +2723,60 @@ class CoreController extends Controller
                         foreach ($eid_arr as $eid) {
                             $assessment = DB::table('assessment')->where('eid', '=', $eid)->first();
                             if ($assessment) {
-                                $connect->table('assessment')->insert((array) $assessment);
+                                DB::connection('mysql2')->table('assessment')->insert((array) $assessment);
                             }
                             $billing = DB::table('billing')->where('eid', '=', $eid)->get();
                             foreach ($billing as $billing_row) {
-                                $connect->table('billing')->insert((array) $billing_row);
+                                DB::connection('mysql2')->table('billing')->insert((array) $billing_row);
                             }
                             $billing_core2 = DB::table('billing_core')->where('pid', '=', $pid)->where('eid', '=',  $eid)->where('practice_id', '=', Session::get('practice_id'))->get();
                             foreach ($billing_core2 as $billing_core2_row) {
-                                $connect->table('billing_core')->insert((array) $billing_core2_row);
+                                DB::connection('mysql2')->table('billing_core')->insert((array) $billing_core2_row);
                             }
-                            $connect->table('billing_core')->update(['practice_id' => '1']);
+                            DB::connection('mysql2')->table('billing_core')->update(['practice_id' => '1']);
                             $hpi = DB::table('hpi')->where('eid', '=', $eid)->first();
                             if ($hpi) {
-                                $connect->table('hpi')->insert((array) $hpi);
+                                DB::connection('mysql2')->table('hpi')->insert((array) $hpi);
                             }
                             $image = DB::table('image')->where('eid', '=', $eid)->get();
                             if ($image->count()) {
                                 foreach ($image as $image_row) {
-                                    $connect->table('image')->insert((array) $image_row);
+                                    DB::connection('mysql2')->table('image')->insert((array) $image_row);
                                 }
                             }
                             $labs = DB::table('labs')->where('eid', '=', $eid)->first();
                             if ($labs) {
-                                $connect->table('labs')->insert((array) $labs);
+                                DB::connection('mysql2')->table('labs')->insert((array) $labs);
                             }
                             $other_history = DB::table('other_history')->where('eid', '=', $eid)->get();
                             if ($other_history->count()) {
                                 foreach ($other_history as $other_history_row) {
-                                    $connect->table('other_history')->insert((array) $other_history_row);
+                                    DB::connection('mysql2')->table('other_history')->insert((array) $other_history_row);
                                 }
                             }
                             $pe = DB::table('pe')->where('eid', '=', $eid)->first();
                             if ($pe) {
-                                $connect->table('pe')->insert((array) $pe);
+                                DB::connection('mysql2')->table('pe')->insert((array) $pe);
                             }
                             $plan = DB::table('plan')->where('eid', '=', $eid)->first();
                             if ($plan) {
-                                $connect->table('plan')->insert((array) $plan);
+                                DB::connection('mysql2')->table('plan')->insert((array) $plan);
                             }
                             $procedure = DB::table('procedure')->where('eid', '=', $eid)->first();
                             if ($procedure) {
-                                $connect->table('procedure')->insert((array) $procedure);
+                                DB::connection('mysql2')->table('procedure')->insert((array) $procedure);
                             }
                             $ros = DB::table('ros')->where('eid', '=', $eid)->first();
                             if ($ros) {
-                                $connect->table('ros')->insert((array) $ros);
+                                DB::connection('mysql2')->table('ros')->insert((array) $ros);
                             }
                             $rx = DB::table('rx')->where('eid', '=', $eid)->first();
                             if ($rx) {
-                                $connect->table('rx')->insert((array) $rx);
+                                DB::connection('mysql2')->table('rx')->insert((array) $rx);
                             }
                             $vitals = DB::table('vitals')->where('eid', '=', $eid)->first();
                             if ($vitals) {
-                                $connect->table('vitals')->insert((array) $vitals);
+                                DB::connection('mysql2')->table('vitals')->insert((array) $vitals);
                             }
                             $i++;
                             $percent1 = round($j/$eid_count*25) + 70;
@@ -2802,8 +2796,7 @@ class CoreController extends Controller
                     $mess = "Error creating database: " . mysqli_error($connect);
                 }
             }
-            // mysqli_close($connect);
-            DB::disconnect('mysql2');
+            mysqli_close($connect);
             $zip->close();
             Session::forget('database_export');
             $headers = [
