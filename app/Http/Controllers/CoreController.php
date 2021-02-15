@@ -4906,6 +4906,7 @@ class CoreController extends Controller
         $data['message_action'] = Session::get('message_action');
         Session::forget('message_action');
         Session::forget('messaging_add_photo');
+        Session::forget('messaging_editdoc');
         $practice = DB::table('practiceinfo')->where('practice_id', '=', Session::get('practice_id'))->first();
         $return = '';
         $count = 0;
@@ -5227,6 +5228,7 @@ class CoreController extends Controller
             }
             Session::put('message_action', trans('noshform.page_saved'));
             if ($last_key == $request->input('image_path')) {
+                Session::forget('messaging_editdoc');
                 return redirect()->route('messaging_editdoc_process', [$id, $type]);
             } else {
                 while (!in_array(key($arr), [$request->input('image_path'), null])) {
@@ -5607,6 +5609,7 @@ class CoreController extends Controller
         } else {
             $data['message_action'] = Session::get('message_action');
             Session::forget('message_action');
+            Session::forget('messaging_editdoc');
             // Create job_id if new
             if ($id == '0') {
                 $fax_data = [
