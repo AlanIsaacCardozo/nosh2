@@ -5220,13 +5220,10 @@ class CoreController extends Controller
                 Session::put('messaging_editdoc_pages_list', $arr);
                 Session::put('messaging_editdoc_pages', $arr1);
             } else {
-                $tmp_url = $request->input('image_path');
-                $tmp_url = parse_url($tmp_url, PHP_URL_PATH);
-                $tmp_url =  public_path() . $tmp_url;
                 $image = imagecreatefrompng($request->input('image'));
                 imagealphablending($image, false);
                 imagesavealpha($image, true);
-                imagejpeg($image, $arr1[$tmp_url], 100);
+                imagejpeg($image, $arr1[$request->input('image_path')], 100);
             }
             Session::put('message_action', trans('noshform.page_saved'));
             if ($last_key == $request->input('image_path')) {
