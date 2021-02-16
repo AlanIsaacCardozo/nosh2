@@ -375,9 +375,14 @@ form#search_patient_form button, form#search_patient_form a,form#search_patient_
     align-items: center;
 }
 
-/*patient name field*/
+/* patient name field*/
 #document_process_form #patient_name{
     width: 100%;
     pointer-events: none;
     border: none;
 }
+
+/* Messaging Edit Doc Buttons */
+#image_form .nosh-button-submit, #image_form a.btn-danger{
+    width: 100%;
+} 

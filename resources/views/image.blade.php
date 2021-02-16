@@ -29,6 +29,7 @@
                                  </div>
                              </div>
                         </form>
+                        {!! $content !!}
                     </div>
                 </div>
             </div>
@@ -106,7 +107,6 @@
                             <canvas id="sketchpad" class="sketchpad_class" height="100" width="100"></canvas>
                             <canvas id="sketchpad_temp" class="sketchpad_class" height="100" width="100"></canvas>
                         </div>
-                        {!! $content !!}
                     </div>
                 </div>
             </div>
