@@ -196,8 +196,8 @@
                                 @if (env('DOCKER') !== '1')
                                     <li><a href="{{ route('update_system') }}"><i class="fa fa-fw fa-btn fa-download"></i>{{ trans('nosh.update_system') }}</a></li>
                                 @endif
-                                <li><a href="https://github.com/shihjay2/nosh2/issues/new" target="_blank" class="nosh-no-load"><i class="fa fa-fw fa-btn fa-github-alt"></i>{{ trans('nosh.report_bug') }}</a></li>
-                                <li><a href="https://github.com/shihjay2/nosh2/issues/new" target="_blank" class="nosh-no-load"><i class="fa fa-fw fa-btn fa-heart"></i>{{ trans('nosh.make_suggestion') }}</a></li>
+                                <li><a href="mailto:support@13teams.com" target="_blank" class="nosh-no-load"><i class="fa fa-fw fa-btn fa-github-alt"></i>{{ trans('nosh.report_bug') }}</a></li>
+                                <li><a href="mailto:support@13teams.com" target="_blank" class="nosh-no-load"><i class="fa fa-fw fa-btn fa-heart"></i>{{ trans('nosh.make_suggestion') }}</a></li>
                                 <li><a href="{{ route('logout') }}"><i class="fa fa-fw fa-btn fa-sign-out"></i>{{ trans('nosh.logout') }}</a></li>
                             </ul>
                         </li>
