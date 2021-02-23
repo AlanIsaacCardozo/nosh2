@@ -2548,14 +2548,14 @@ class Controller extends BaseController
             }
             $data = [
                 '*~patient~*' => $patient->firstname . ' ' . $patient->lastname . ' (' . trans('noshform.DOB') . ': ' . date('F jS, Y', $this->human_to_unix($patient->DOB)) . ')',
-                '*~firstname~*' => $patient->firstname,
+                '~~firstname~~' => $patient->firstname,
                 '*~fullname~*' => $patient->firstname . ' ' . $patient->lastname,
                 '*~he/she~*' => $gender_arr[$patient->sex],
                 '*~He/She~*' => ucfirst($gender_arr[$patient->sex]),
-                '*~letterintro~*' => trans('noshform.letter1') . ' ' . $patient->firstname . ' ' . $patient->lastname . ' (' . trans('noshform.DOB') . ': ' . date('F jS, Y', $this->human_to_unix($patient->DOB)) . '), ' . trans('noshform.letter2') . '.' . $lastvisit,
-                '*~problems~*' => $problem,
-                '*~meds~*' => $med,
-                '*~allergies~*' => $allergy,
+                '~~letterintro~~' => trans('noshform.letter1') . ' ' . $patient->firstname . ' ' . $patient->lastname . ' (' . trans('noshform.DOB') . ': ' . date('F jS, Y', $this->human_to_unix($patient->DOB)) . '), ' . trans('noshform.letter2') . '.' . $lastvisit,
+                '~~problems~~' => $problem,
+                '~~meds~~' => $med,
+                '~~allergies~~' => $allergy,
                 '*~imm~*' => $imm
             ];
         }

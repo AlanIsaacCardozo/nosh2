@@ -135,27 +135,27 @@ hpi:
 letter_body:
   School Absence:
     -
-      text: *~letterintro~*
+      text: ~~letterintro~~
       normal: yes
     -
-      text: Please excuse *~firstname~* from school starting
+      text: Please excuse ~~firstname~~ from school starting
       input: text
     -
-      text:  *~firstname~* can return to school on
+      text:  ~~firstname~~ can return to school on
       input: text
   Work Absence:
     -
-      text: *~letterintro~*
+      text: ~~letterintro~~
       normal: yes
     -
-      text: Please excuse *~firstname~* from work starting
+      text: Please excuse ~~firstname~~ from work starting
       input: text
     -
-      text:  *~firstname~* can return to work on
+      text:  ~~firstname~~ can return to work on
       input: text
   Work Light Duty:
     -
-      text: *~firstname~* should begin the following modified work restrictions
+      text: ~~firstname~~ should begin the following modified work restrictions
     -
       text: Start Date
       input: text
@@ -581,7 +581,7 @@ orders_labs:
         facility: LabCorp
         orders_code: 003772
         cpt: 81001
-        loinc: >,
+        loinc: >
           2965-2,5803-2,5778-6,5767-9,5799-2,20454-5,2349-9,2514-8,5794-3,5770-3,20405-7,5802-4,12235-8
         results_code: >
           13060,13078,13045,13052,13185,13094,13086,13110,13102,13104,13105,13106,12237
@@ -874,7 +874,7 @@ orders_labs:
         facility: QuestDiagnostics
         orders_code: 5463
         cpt: 81001
-        loinc: >,
+        loinc: >
           5811-5,5803-2,5778-6,5767-9,5799-2,20454-5,25428-4,2514-8,5794-3,5770-3,5802-4,12235-8
         results_code: >
           30006000,30006200,30005500,30005600,30006500,30006300,30071800,30005900,30006100,30019500,30006400,30008800
@@ -928,11 +928,11 @@ orders_referrals:
     -
       text: Please provide primary physician with summaries of subsequent visits
     -
-      text: *~problems~*
+      text: ~~problems~~
     -
-      text: *~meds~*
+      text: ~~meds~~
     -
-      text: *~allergies~*
+      text: ~~allergies~~
     -
       text: Please call me when you have seen the patient
     -
@@ -943,11 +943,11 @@ orders_referrals:
     -
       text: Please send the patient back for followup and treatment
     -
-      text: *~problems~*
+      text: ~~problems~~
     -
-      text: *~meds~*
+      text: ~~meds~~
     -
-      text: *~allergies~*
+      text: ~~allergies~~
     -
       text: Confirm the diagnosis
     -
@@ -955,7 +955,7 @@ orders_referrals:
     -
       text: Suggested medication or treatment
     -
-      text: Please call me after you have seen *~firstname~*
+      text: Please call me after you have seen ~~firstname~~
     -
       text: I would like to receive periodic status reports on this patient
     -
@@ -1658,7 +1658,6 @@ pe:
     8:
       text: 'Whiff test - POSITIVE'
       gender: f
-    gender: f
   Genitourinary - Urethra:
     -
       text: 'Swelling - '
@@ -1670,7 +1669,6 @@ pe:
     -
       text: 'Swelling - YES'
       gender: f
-    gender: f
   Genitourinary - Bladder:
     -
       text: 'Tenderness - '
@@ -1682,7 +1680,6 @@ pe:
     -
       text: 'Tenderness - YES'
       gender: f
-    gender: f
   Genitourinary - Cervix:
     -
       text: 'Tenderness - '
@@ -1704,7 +1701,6 @@ pe:
     -
       text: 'Bleeding - YES'
       gender: f
-    gender: f
   Genitourinary - Uterus:
     -
       text: 'Masses - '
@@ -1726,7 +1722,6 @@ pe:
     -
       text: 'Prolapse - YES'
       gender: f
-    gender: f
   Genitourinary - Adnexa:
     -
       text: 'Masses - '
@@ -1748,7 +1743,6 @@ pe:
     -
       text: 'Tenderness - YES'
       gender: f
-    gender: f
   Genitourinary - Scrotum:
     0:
       text: 'Masses - '
@@ -2975,7 +2969,7 @@ pe:
     16:
       text: 'Urticaria - None'
       normal: true
-hpi:
+
   Asthma:
     -
       text: 'Frequency of attacks per week'
