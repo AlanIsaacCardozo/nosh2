@@ -1990,6 +1990,206 @@ class CoreController extends Controller
         $data['assets_js'] = $this->assets_js();
         $data['assets_css'] = $this->assets_css();
         return view('welcome', $data);
+        // return view('dashboard', $data);
+    }
+
+
+    public function kanbanboard(Request $request)
+    {
+        $data['title'] = 'Simplenote ChartingSystem';
+        $user_id = Session::get('user_id');
+        if (Session::get('group_id') == '100') {
+            $row = DB::table('demographics_relate')->where('id', '=', $user_id)->first();
+            $this->setpatient($row->pid);
+            return redirect()->intended('patient');
+        }
+        if (Session::get('group_id') != '100' && Session::get('patient_centric') == 'yp') {
+            return redirect()->route('pnosh_provider_redirect');
+        }
+        $data['message_action'] = Session::get('message_action');
+        Session::forget('message_action');
+        $practice_id = Session::get('practice_id');
+        $data['practiceinfo'] = DB::table('practiceinfo')->where('practice_id', '=', $practice_id)->first();
+        $result = DB::table('users')->where('id', '=', $user_id)->first();
+        $data['displayname'] = $result->displayname;
+        $displayname = $result->displayname;
+        $fax_query = DB::table('received')->where('practice_id', '=', $practice_id)->count();
+        $from = $displayname . ' (' . $user_id . ')';
+        if (Session::get('group_id') == '2') {
+            $data['number_messages'] = DB::table('messaging')->where('mailbox', '=', $user_id)->where('read', '=', null)->count();
+            $data['number_scans'] = DB::table('scans')->where('practice_id', '=', $practice_id)->count();
+            if ($data['practiceinfo']->fax_type !== '') {
+                $data['number_faxes'] = DB::table('received')->where('practice_id', '=', $practice_id)->count();
+            }
+            $data['number_appts'] = $this->getNumberAppts($user_id);
+            $data['number_t_messages'] = DB::table('t_messages')
+                ->join('demographics', 't_messages.pid', '=', 'demographics.pid')
+                ->where('t_messages.t_messages_from', '=', $from)
+                ->where('t_messages.t_messages_signed', '=', 'No')
+                ->count();
+            $data['number_encounters'] = DB::table('encounters')
+                ->join('demographics', 'encounters.pid', '=', 'demographics.pid')
+                ->where('encounters.encounter_provider', '=', $displayname)
+                ->where('encounters.encounter_signed', '=', 'No')
+                ->count();
+            $data['number_reminders'] = DB::table('alerts')
+                ->join('demographics', 'alerts.pid', '=', 'demographics.pid')
+                ->whereRaw("find_in_set($user_id,alerts.alert_providers)")
+                ->where('alerts.alert_date_complete', '=', '0000-00-00 00:00:00')
+                ->where('alerts.alert_reason_not_complete', '=', '')
+                ->where(function($query_array) {
+                    $query_array->where('alerts.alert', '=', 'Laboratory results pending')
+                    ->orWhere('alerts.alert', '=', 'Radiology results pending')
+                    ->orWhere('alerts.alert', '=', 'Cardiopulmonary results pending')
+                    ->orWhere('alerts.alert', '=', 'Referral pending')
+                    ->orWhere('alerts.alert', '=', 'Laboratory results pending - NEED TO OBTAIN')
+                    ->orWhere('alerts.alert', '=', 'Radiology results pending - NEED TO OBTAIN')
+                    ->orWhere('alerts.alert', '=', 'Cardiopulmonary results pending - NEED TO OBTAIN')
+                    ->orWhere('alerts.alert', '=', 'Reminder')
+                    ->orWhere('alerts.alert', '=', 'REMINDER')
+                    ->orWhere('alerts.results', '=', 1);;
+                })
+                ->count();
+            $data['number_bills'] = DB::table('encounters')->where('bill_submitted', '=', 'No')->where('user_id', '=', $user_id)->count();
+            $data['number_tests'] = DB::table('tests')->whereNull('pid')->where('practice_id', '=', $practice_id)->count();
+            if($data['practiceinfo']->mtm_extension == 'y') {
+                $mtm_users_array = explode(",", $data['practiceinfo']->mtm_alert_users);
+                if (in_array($user_id, $mtm_users_array)) {
+                    $data['mtm_alerts'] = DB::table('alerts')->where('alert_date_complete', '=', '0000-00-00 00:00:00')
+                        ->where('alert_reason_not_complete', '=', '')
+                        ->where('alert', '=', 'Medication Therapy Management')
+                        ->where('practice_id', '=', $practice_id)
+                        ->count();
+                    $data['mtm_alerts_status'] = "y";
+                } else {
+                    $data['mtm_alerts_status'] = "n";
+                }
+            } else {
+                $data['mtm_alerts_status'] = "n";
+            }
+            $data['panel_header'] = trans('noshform.inventory_alerts');
+            $data['content'] = $this->vaccine_supplement_alert($practice_id);
+        }
+        if (Session::get('group_id') == '3') {
+            $data['number_messages'] = DB::table('messaging')->where('mailbox', '=', $user_id)->where('read', '=', null)->count();
+            $data['number_scans'] = DB::table('scans')->where('practice_id', '=', $practice_id)->count();
+            if ($data['practiceinfo']->fax_type !== '') {
+                $data['number_faxes'] = DB::table('received')->where('practice_id', '=', $practice_id)->count();
+            }
+            $data['number_t_messages'] = DB::table('t_messages')
+                ->join('demographics', 't_messages.pid', '=', 'demographics.pid')
+                ->where('t_messages.t_messages_from', '=', $from)
+                ->where('t_messages.t_messages_signed', '=', 'No')
+                ->count();
+            $data['number_reminders'] = DB::table('alerts')
+                ->join('demographics', 'alerts.pid', '=', 'demographics.pid')
+                ->whereRaw("find_in_set($user_id,alerts.alert_providers)")
+                ->where('alerts.alert_date_complete', '=', '0000-00-00 00:00:00')
+                ->where('alerts.alert_reason_not_complete', '=', '')
+                ->where(function($query_array) {
+                    $query_array->where('alerts.alert', '=', 'Laboratory results pending')
+                    ->orWhere('alerts.alert', '=', 'Radiology results pending')
+                    ->orWhere('alerts.alert', '=', 'Cardiopulmonary results pending')
+                    ->orWhere('alerts.alert', '=', 'Referral pending')
+                    ->orWhere('alerts.alert', '=', 'Laboratory results pending - NEED TO OBTAIN')
+                    ->orWhere('alerts.alert', '=', 'Radiology results pending - NEED TO OBTAIN')
+                    ->orWhere('alerts.alert', '=', 'Cardiopulmonary results pending - NEED TO OBTAIN')
+                    ->orWhere('alerts.alert', '=', 'Reminder')
+                    ->orWhere('alerts.alert', '=', 'REMINDER')
+                    ->orWhere('alerts.results', '=', 1);;
+                })
+                ->count();
+            $data['number_bills'] = DB::table('encounters')->where('bill_submitted', '=', 'No')->where('user_id', '=', $user_id)->count();
+            $data['number_tests'] = DB::table('tests')->whereNull('pid')->where('practice_id', '=', $practice_id)->count();
+            $data['panel_header'] = trans('noshform.inventory_alerts');
+            $data['content'] = $this->vaccine_supplement_alert($practice_id);
+        }
+        if (Session::get('group_id') == '4') {
+            $data['number_messages'] = DB::table('messaging')->where('mailbox', '=', $user_id)->where('read', '=', null)->count();
+            $data['number_bills'] = DB::table('encounters')->where('bill_submitted', '=', 'No')->where('user_id', '=', $user_id)->count();
+            $data['number_scans'] = DB::table('scans')->where('practice_id', '=', $practice_id)->count() + $fax_query;
+            if ($data['practiceinfo']->fax_type !== '') {
+                $data['number_faxes'] = DB::table('received')->where('practice_id', '=', $practice_id)->count();
+            }
+        }
+        if (Session::get('group_id') == '1') {
+            if ($practice_id == '1') {
+                $data['saas_admin'] = 'y';
+            }
+            if (Session::get('patient_centric') !== 'y') {
+                $users = DB::table('users')->where('group_id', '=', '2')->where('practice_id', '=', Session::get('practice_id'))->first();
+                if (!$users) {
+                    $data['users_needed'] = 'y';
+                }
+                $schedule = DB::table('practiceinfo')->where('practice_id', '=', Session::get('practice_id'))->whereNull('minTime')->first();
+                if ($schedule) {
+                    $data['schedule_needed'] = 'y';
+                }
+            }
+            if (Session::has('download_now')) {
+                $data['download_now'] = route('download_now');
+            }
+            if (Session::has('download_ccda_entire')) {
+                $data['download_progress'] = Session::get('download_ccda_entire');
+                Session::forget('download_ccda_entire');
+            }
+            if (Session::has('download_charts_entire')) {
+                $data['download_progress'] = Session::get('download_charts_entire');
+                Session::forget('download_charts_entire');
+            }
+            if (Session::has('database_export')) {
+                $data['download_progress'] = Session::get('database_export');
+                Session::forget('database_export');
+            }
+            if (Session::has('download_csv_demographics')) {
+                $data['download_progress'] = Session::get('download_csv_demographics');
+                Session::forget('download_csv_demographics');
+            }
+            if (!isset($data['users_needed']) && !isset($data['schedule_needed'])) {
+                $data['admin_ok'] = 'y';
+            }
+            $query = DB::table('audit')->where('practice_id', '=', Session::get('practice_id'))->orderBy('timestamp', 'desc')->paginate(20);
+            if ($query->count()) {
+                $list_array = [];
+                foreach ($query as $row) {
+                    $arr = [];
+                    $arr['label'] = '<b>' . date('Y-m-d', $this->human_to_unix($row->timestamp)) . '</b> - ' . $row->displayname . '<br>' . $row->query;
+                    $list_array[] = $arr;
+                }
+                $return = $this->result_build($list_array, 'audit_list');
+                $return .= $query->links();
+            } else {
+                $return = trans('noshform.none') . '.';
+            }
+            $data['panel_header'] = trans('noshform.audit_logs');
+            $data['content'] = $return;
+        }
+        $data['weekends'] = 'false';
+        $data['schedule_increment'] = '15';
+        if ($data['practiceinfo']->weekends == '1') {
+            $data['weekends'] = 'true';
+        }
+        $data['minTime'] = ltrim($data['practiceinfo']->minTime,"0");
+        $data['maxTime'] = ltrim($data['practiceinfo']->maxTime,"0");
+        if (Session::get('group_id') == '2') {
+            $provider = DB::table('providers')->where('id', '=', Session::get('user_id'))->first();
+            $data['schedule_increment'] = $provider->schedule_increment;
+        }
+        if ($data['practiceinfo']->fax_type != "") {
+            $data1['fax'] = true;
+        } else {
+            $data1['fax'] = false;
+        }
+        Session::put('last_page', $request->fullUrl());
+        // $data['name'] = 'Test';
+        // $data['template_content'] = 'test';
+
+        // $data['back'] = '<div class="btn-group"><button type="button" class="btn btn-primary">Action</button><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span><span class="sr-only">Toggle Dropdown</span></button>';
+        // $data['back'] .= '<ul class="dropdown-menu"><li><a href="#">Action</a></li><li><a href="#">Another action</a></li><li><a href="#">Something else here</a></li><li role="separator" class="divider"></li><li><a href="#">Separated link</a></li></ul></div>';
+        $data['assets_js'] = $this->assets_js();
+        $data['assets_css'] = $this->assets_css();
+        // return view('welcome', $data);
+        return view('dashboard', $data);
     }
 
     public function dashboard_encounters(Request $request)

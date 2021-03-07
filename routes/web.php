@@ -169,6 +169,12 @@ Route::post('update_cpt', ['as' => 'update_cpt', 'uses' => 'AjaxCoreController@u
 Route::post('read_message', ['as' => 'read_message', 'uses' => 'AjaxCoreController@read_message']);
 Route::post('superquery_tag_view', ['as' => 'superquery_tag_view', 'uses' => 'AjaxCoreController@superquery_tag_view']);
 
+//Kanban routes
+Route::any('kanban', ['as' => 'kanban', 'uses' => 'KanbanController@index']);
+Route::put('kanban/sync', ['as' => 'kanba.sync', 'uses' => 'KanbanController@sync']);
+Route::get('/kanbanboard', ['as' => 'dashboard', 'uses' => 'CoreController@kanbanboard']);
+
+
 // Chart routes
 Route::any('action_edit/{table}/{index}/{id}/{yaml_id}/{column?}', ['as' => 'action_edit', 'uses' => 'ChartController@action_edit']);
 Route::get('alerts_list/{type}', ['as' => 'alerts_list', 'uses' => 'ChartController@alerts_list']);

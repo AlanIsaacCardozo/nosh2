@@ -1,5 +1,5 @@
 const mix = require('laravel-mix');
-
+require('laravel-mix-tailwind');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -10,6 +10,9 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
+mix.js('resources/js/app.js', 'public/js')
+   .postCss('resources/css/app.css', 'public/css')
+   .tailwind('./tailwind.config.js');
 
 mix.styles([
     'public/assets/css/fontawesome/css/all.min.css',
@@ -286,4 +289,8 @@ mix.scripts([
     'public/assets/js/jquery.signaturepad.min.js',
 ], 'public/assets/js/builds/signature.js');
 
-mix.version();
+
+if (!process.env.NODE_HOT) {
+    mix.version();
+}
+
