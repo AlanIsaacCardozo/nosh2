@@ -26,14 +26,14 @@ class KanbanController extends Controller {
 
 		$status_result = DB::table('statuses')
 				->select('*')
-				->where('user_id', '=', $userId)->orderBy('order', 'asc')->get();
+				->orderBy('order', 'asc')
+				->get();
 		
 		$tasks = array();
 		foreach($status_result as $status){
 			$status->tasks = [];
 			foreach($task_result as $task){
 				if($task->status_id == $status->id){
-					
 					array_push($status->tasks, $task);
 				}
 				
@@ -121,7 +121,6 @@ class KanbanController extends Controller {
         foreach ($request->columns as $status) {
             foreach ($status['tasks'] as $i => $task) {
 				$order = $i + 1;
-				echo $task['id']; 
                 if ($task['status_id'] !== $status['id'] || $task['order'] !== $order) {
 					DB::table('tasks')
 							->where('id','=', $task['id'])
@@ -226,23 +225,7 @@ class KanbanController extends Controller {
 			}
 			
 		}
-		$status_list = ['Messages', 'To Do', 'Doing', 'Completed'];
-		foreach($status_list as $key=>$val){
-			$data = array(
-				'title'=>$val,
-				'slug'=>$key+1,
-				'order'=>$key+1,
-				'user_id'=>$userId,
-			);
-			DB::table('statuses')->updateOrInsert
-			(
-				[
-					'user_id'=>$userId,
-					'slug'=>$key+1,
-				],
-				$data
-			);
-		}
+		
 		
 	}
 	
@@ -255,7 +238,8 @@ class KanbanController extends Controller {
 
 		$status_result = DB::table('statuses')
 				->select('*')
-				->where('user_id', '=', $userId)->orderBy('order', 'asc')->get();
+				->orderBy('order', 'asc')
+				->get();
 		
 		$tasks = array();
 		foreach($status_result as $status){

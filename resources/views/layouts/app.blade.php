@@ -460,7 +460,7 @@
         </div>
         @endif
         @if($sidebar_content == 'kanban')
-        <div id="sidebar" class="sidebar-offcanvas">
+        <div id="sidebar" class="sidebar-offcanvas  bg-blue-500">
             <div class="col-md-12">
                 @if (isset($sidebar_title))
                     <div class="sidebar-title">
