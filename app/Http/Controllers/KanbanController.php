@@ -161,6 +161,7 @@ class KanbanController extends Controller {
 
 		$userId = Session::get('user_id')?Session::get('user_id'):0;
 		$is_updated = false;
+		$i=1;
 		foreach($data as $key=>$v){
 			$is_update= false;
 			$title = "";
@@ -208,6 +209,7 @@ class KanbanController extends Controller {
 				$data = array(
 					'title'=>$title,
 					'description'=>'',
+					'order' => $i++,
 					'count'=>$v,
 					'status_id'=>1,
 					'user_id'=>$userId,
