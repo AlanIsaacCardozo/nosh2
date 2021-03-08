@@ -209,6 +209,7 @@ class KanbanController extends Controller {
 					'title'=>$title,
 					'description'=>'',
 					'count'=>$v,
+					'status_id'=>1,
 					'user_id'=>$userId,
 				);
 				DB::table('tasks')->updateOrInsert
@@ -223,35 +224,7 @@ class KanbanController extends Controller {
 			}
 			
 		}
-		if(!$is_updated){
-			$arr_title = [
-							trans('nosh.messages'),
-							trans('nosh.scanned_documents'),
-							trans('nosh.appointments_today'),
-							trans('nosh.telephone_messages'),
-							trans('nosh.encounters_complete'),
-							trans('nosh.reminders'),
-							trans('nosh.bills_process'),
-							trans('nosh.test_results_review'),
-							trans('nosh.fax_messages'),
-			];
-			foreach($arr_title as $title){
-				$data = array(
-					'title'=>$title,
-					'description'=>'',
-					'count'=>0,
-					'user_id'=>$userId,
-				);
-				DB::table('tasks')->updateOrInsert
-				(
-					[
-						'user_id'=>$userId,
-						'title'=>$title,
-					],
-					$data
-				);
-			}
-		}
+		
 	}
 	
 	function getTasks(){
