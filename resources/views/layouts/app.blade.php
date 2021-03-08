@@ -263,7 +263,7 @@
         @endif
     @endif
     @if (isset($sidebar_content))
-    <div class="row-offcanvas row-offcanvas-left">
+    <div class="row-offcanvas row-offcanvas-left bg-blue-500">
         @if($sidebar_content == 'chart')
         <!-- Sidebar -->
         <div id="sidebar" class="sidebar-offcanvas">
@@ -460,7 +460,7 @@
         </div>
         @endif
         @if($sidebar_content == 'kanban')
-        <div id="sidebar" class="sidebar-offcanvas  bg-blue-500">
+        <div id="sidebar" class="sidebar-offcanvas">
             <div class="col-md-12">
                 @if (isset($sidebar_title))
                     <div class="sidebar-title">
