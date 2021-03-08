@@ -224,6 +224,23 @@ class KanbanController extends Controller {
 			}
 			
 		}
+		$status_list = ['Messages', 'To Do', 'Doing', 'Completed'];
+		foreach($status_list as $key=>$val){
+			$data = array(
+				'title'=>$val,
+				'slug'=>$key+1,
+				'order'=>$key+1,
+				'user_id'=>$userId,
+			);
+			DB::table('statuses')->updateOrInsert
+			(
+				[
+					'user_id'=>$userId,
+					'slug'=>$key+1,
+				],
+				$data
+			);
+		}
 		
 	}
 	
