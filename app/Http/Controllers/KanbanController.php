@@ -15,28 +15,26 @@ class KanbanController extends Controller {
 	public static function index()
     {
 		$userId = Session::get('user_id')?Session::get('user_id'):0;
-		$query_result = DB::table('tasks')
+		$task_result = DB::table('tasks')
 				->select('tasks.*')
 				->join('statuses', 'statuses.id', '=', 'tasks.status_id')
-				->where('tasks.user_id', '=', $userId)->orderBy('tasks.status_id', 'asc')->orderBy('tasks.order', 'asc')->get();
+				->where('tasks.user_id', '=', $userId)
+				->orderBy('tasks.status_id', 'asc')
+				->orderBy('tasks.order', 'asc')
+				->get()
+				->all();
 
-		
-		$temptasks = json_encode($query_result);
-		$newtasks = json_decode($temptasks, true);
-
-		$query_result1 = DB::table('statuses')
+		$status_result = DB::table('statuses')
 				->select('*')
 				->where('user_id', '=', $userId)->orderBy('order', 'asc')->get();
-		$tempStatuses = json_encode($query_result1);
-		$newStatuses = json_decode($tempStatuses, true);
 		
 		$tasks = array();
-		foreach($newStatuses as $status){
-			$status['tasks'] = [];
-			foreach($newtasks as $task){
-				if($task['status_id'] == $status['id']){
+		foreach($status_result as $status){
+			$status->tasks = [];
+			foreach($task_result as $task){
+				if($task->status_id == $status->id){
 					
-					array_push($status['tasks'], $task);
+					array_push($status->tasks, $task);
 				}
 				
 			}
@@ -62,6 +60,55 @@ class KanbanController extends Controller {
         return $request->user()
             ->tasks()
             ->create($request->only('title', 'description', 'status_id'));
+	}
+	
+	public function add_task(Request $request)
+    {
+		$userId = Session::get('user_id')?Session::get('user_id'):0;
+        $this->validate($request, [
+            'title' => ['required', 'string', 'max:56'],
+            'description' => ['nullable', 'string'],
+            'status_id' => ['required', 'exists:statuses,id']
+		]);
+		$title = $request->input('title');
+		$description = $request->input('description');
+		$status_id = $request->input('status_id');
+		$data = array(
+			'title'=>$title,
+			'description'=>$description,
+			'count'=>0,
+			'user_id'=>$userId,
+			'status_id'=> $status_id
+		);
+
+		$existingRecord = DB::table('tasks')
+									->where('user_id', $userId)
+									->where('title', $title)
+									->where('status_id', $status_id)
+									->first();
+		if($existingRecord){
+			return 0;
+		}
+		$task_id = DB::table('tasks')->updateOrInsert
+		(
+			[
+				'user_id'=>$userId,
+				'title'=>$title,
+				'status_id'=> $status_id
+			],
+			$data
+		);
+
+		$updatedOrInsertedRecord = DB::table('tasks')
+									->where('user_id', $userId)
+									->where('title', $title)
+									->where('status_id', $status_id)
+									->first();
+		$result = [];
+		foreach($updatedOrInsertedRecord as $key=>$val){
+			$result[$key] = $val;
+		}
+        return $result;
     }
 
     public function sync(Request $request)
@@ -179,28 +226,22 @@ class KanbanController extends Controller {
 	
 	function getTasks(){
 		$userId = Session::get('user_id')?Session::get('user_id'):0;
-		$query_result = DB::table('tasks')
+		$task_result = DB::table('tasks')
 				->select('tasks.*')
 				->join('statuses', 'statuses.id', '=', 'tasks.status_id')
 				->where('tasks.user_id', '=', $userId)->orderBy('tasks.status_id', 'asc')->orderBy('tasks.order', 'asc')->get();
 
-		
-		$temptasks = json_encode($query_result);
-		$newtasks = json_decode($temptasks, true);
-
-		$query_result1 = DB::table('statuses')
+		$status_result = DB::table('statuses')
 				->select('*')
 				->where('user_id', '=', $userId)->orderBy('order', 'asc')->get();
-		$tempStatuses = json_encode($query_result1);
-		$newStatuses = json_decode($tempStatuses, true);
 		
 		$tasks = array();
-		foreach($newStatuses as $status){
-			$status['tasks'] = [];
-			foreach($newtasks as $task){
-				if($task['status_id'] == $status['id']){
+		foreach($status_result as $status){
+			$status->tasks = [];
+			foreach($task_result as $task){
+				if($task->status_id == $status->id){
 					
-					array_push($status['tasks'], $task);
+					array_push($status->tasks, $task);
 				}
 				
 			}
@@ -208,5 +249,4 @@ class KanbanController extends Controller {
 		}
 		return $tasks;
 	}
-
 }

@@ -68,7 +68,7 @@ export default {
 
       // Send new task to server
       axios
-        .post("/tasks", this.newTask)
+        .post("/kanban/add_task", this.newTask)
         .then(res => {
           // Tell the parent component we've added a new task and include it
           this.$emit("task-added", res.data);

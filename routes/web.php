@@ -58,7 +58,7 @@ Route::get('update_system/{type?}', ['as' => 'update_system', 'uses' => 'Install
 Route::post('get_state_data', ['as' => 'get_state_data', 'uses' => 'AjaxInstallController@get_state_data']);
 
 // Core routes
-Route::get('/', ['as' => 'dashboard', 'uses' => 'CoreController@dashboard']);
+// Route::get('/', ['as' => 'dashboard', 'uses' => 'CoreController@dashboard']);
 Route::any('add_patient', ['as' => 'add_patient', 'uses' => 'CoreController@add_patient']);
 Route::get('addressbook/{type}', ['as' => 'addressbook', 'uses' => 'CoreController@addressbook']);
 Route::get('audit_logs', ['as' => 'audit_logs', 'uses' => 'CoreController@audit_logs']);
@@ -172,7 +172,8 @@ Route::post('superquery_tag_view', ['as' => 'superquery_tag_view', 'uses' => 'Aj
 //Kanban routes
 Route::any('kanban', ['as' => 'kanban', 'uses' => 'KanbanController@index']);
 Route::put('kanban/sync', ['as' => 'kanba.sync', 'uses' => 'KanbanController@sync']);
-Route::get('/kanbanboard', ['as' => 'dashboard', 'uses' => 'CoreController@kanbanboard']);
+Route::post('kanban/add_task', ['as' => 'kanba.add_task', 'uses' => 'KanbanController@add_task']);
+Route::get('/', ['as' => 'dashboard', 'uses' => 'CoreController@kanbanboard']);
 
 
 // Chart routes

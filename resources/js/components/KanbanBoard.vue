@@ -3,7 +3,7 @@
     <!-- Columns (Statuses) -->
     <div
       v-for="status in statuses"
-      :key="status.slug"
+      :key="status.id"
       class="mr-6 w-4/5 max-w-sm  flex-shrink-0"
     >
       <div class="rounded-md shadow-md overflow-hidden">
@@ -77,15 +77,17 @@
       </div>
     </div>
     <!-- ./Columns -->
+    <!-- <FormDetail/> -->
   </div>
 </template>
 
 <script>
 import draggable from "vuedraggable";
 import AddTaskForm from "./AddTaskForm";
+import FormDetail from "./FormDetail";
 
 export default {
-  components: { draggable, AddTaskForm },
+  components: { draggable, AddTaskForm, FormDetail },
   props: ['initialData'],
   data() {
     return {
@@ -102,16 +104,11 @@ export default {
       };
     }
   },
-  // mounted() {
-  //   // // 'clone' the statuses so we don't alter the prop when making changes
+  mounted() {
+    // // 'clone' the statuses so we don't alter the prop when making changes
     
-  //   // // this.statuses = JSON.parse(JSON.stringify(this.initialData));
-  //   // const {statuses} = this.initialData;
-  //   // this.statuses = statuses;
-  //   // // console.log(this.initialData)
-  //   // // console.log(this.statuses);
-  //   // // console.log('yes');
-  // },
+    this.statuses = this.initialData;
+  },
   methods: {
     openAddTaskForm(statusId) {
       this.newTaskForStatus = statusId;
@@ -121,6 +118,8 @@ export default {
     },
     handleTaskAdded(newTask) {
       // Find the index of the status where we should add the task
+      console.log(newTask);
+      debugger;
       const statusIndex = this.statuses.findIndex(
         status => status.id === newTask.status_id
       );

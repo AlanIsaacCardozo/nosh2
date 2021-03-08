@@ -2,10 +2,10 @@
 
 @section('content')
 @if (isset($sidebar_content))
-    <div class="container-fluid bg-blue-500" style="height:calc(100vh - 125px)">
+    <div class="container-fluid <?php if($sidebar_content == 'kanban'){ echo "bg-blue-500";}?>" 
+    <?php if($sidebar_content == 'kanban'){echo "style='height:calc(100vh - 125px)'";} ?> >
 @else
-    <!-- <div class="container bg-blue-500"> -->
-    <div class="container-fluid bg-blue-500" style="height:calc(100vh - 125px)">
+    <div class="container bg-blue-500">
 @endif
     @php
         echo App\Http\Controllers\KanbanController::index()
