@@ -160,7 +160,7 @@ class KanbanController extends Controller {
 	public static function updateDB($data){
 
 		$userId = Session::get('user_id')?Session::get('user_id'):0;
-
+		$is_updated = false;
 		foreach($data as $key=>$v){
 			$is_update= false;
 			$title = "";
@@ -219,8 +219,38 @@ class KanbanController extends Controller {
 					],
 					$data
 				);
+				$is_updated = true;
 			}
 			
+		}
+		if(!$is_updated){
+			$arr_title = [
+							trans('nosh.messages'),
+							trans('nosh.scanned_documents'),
+							trans('nosh.appointments_today'),
+							trans('nosh.telephone_messages'),
+							trans('nosh.encounters_complete'),
+							trans('nosh.reminders'),
+							trans('nosh.bills_process'),
+							trans('nosh.test_results_review'),
+							trans('nosh.fax_messages'),
+			];
+			foreach($arr_title as $title){
+				$data = array(
+					'title'=>$title,
+					'description'=>'',
+					'count'=>0,
+					'user_id'=>$userId,
+				);
+				DB::table('tasks')->updateOrInsert
+				(
+					[
+						'user_id'=>$userId,
+						'title'=>$title,
+					],
+					$data
+				);
+			}
 		}
 	}
 	
