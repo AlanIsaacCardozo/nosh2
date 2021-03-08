@@ -42,6 +42,15 @@ return [
     "confirm_new_password" => "Confirmar nuevo password",
     "login_uport" => "Login con uPort",
 
+    //Kanban Sidebar
+    "get_started_guide" => "Guía de inicio",
+    "follow_these_steps" => "Siga estos pasos para empezar a correr.",
+    "show_me" => "Muéstrame",
+    "calendar" => "Calendario",
+    "patientandcontacts" => "Pacientes y contactos",
+    "reports" => "Informes",
+    "settings" => "Ajustes",
+    
     // Dashboard
     "messages" => "Mensajes",
     "view_details" => "Ver detalles",

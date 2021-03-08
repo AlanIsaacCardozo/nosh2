@@ -17672,6 +17672,12 @@ class Controller extends BaseController
                 }
             }
         }
+        if($type == 'kanban'){
+            $return['name'] = Session::get('ptname');
+            $return['title'] = Session::get('ptname');
+            $return ['sidebar_title'] = trans('nosh.get_started_guide');
+            $return['sb_title_description'] = '<p style="margin:2px">'.trans('nosh.follow_these_steps').' <a href="#">'.trans('nosh.show_me').'</a></p>';
+        }
         return $return;
     }
 

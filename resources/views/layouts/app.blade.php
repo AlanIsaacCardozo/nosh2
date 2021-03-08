@@ -264,6 +264,7 @@
     @endif
     @if (isset($sidebar_content))
     <div class="row-offcanvas row-offcanvas-left">
+        @if($sidebar_content == 'chart')
         <!-- Sidebar -->
         <div id="sidebar" class="sidebar-offcanvas">
             <div class="col-md-12">
@@ -457,8 +458,47 @@
                 </ul>
             </div>
         </div>
-        <div id="main">
+        @endif
+        @if($sidebar_content == 'kanban')
+        <div id="sidebar" class="sidebar-offcanvas">
             <div class="col-md-12">
+                @if (isset($sidebar_title))
+                    <div class="sidebar-title">
+                        <h4>{{ $sidebar_title }}</h4>
+                        {!! $sb_title_description !!}
+                    </div>
+                @endif
+                <ul class="nav nav-pills nav-stacked">
+                    <li @if(isset($calendar_active)) class="active" @endif>
+                        <a href="{{ route('schedule') }}">
+                            <i class="fa fa-calendar fa-fw fa-lg"></i>
+                            <span class="sidebar-item">{{ trans('nosh.calendar') }}</span>
+                        </a>
+                    </li>
+                    <li @if(isset($patncont_active)) class="active" @endif>
+                        <a href="{{ route('patient', ['type' => 'active']) }}">
+                            <i class="fa fa-group fa-fw fa-lg"></i>
+                            <span class="sidebar-item">{{ trans('nosh.patientandcontacts') }}</span>
+                        </a>
+                    </li>
+                    <li @if(isset($reports_active)) class="active" @endif>
+                        <a href="{{ route('superquery_list', ['type' => 'active']) }}">
+                            <i class="fa fa-area-chart fa-fw fa-lg"></i>
+                            <span class="sidebar-item">{{ trans('nosh.reports') }}</span>
+                        </a>
+                    </li>
+                    <li @if(isset($supplements_active)) class="active" @endif>
+                        <a href="{{ route('supplements_list', ['type' => 'active']) }}">
+                            <i class="fa fa-cog fa-fw fa-lg"></i>
+                            <span class="sidebar-item">{{ trans('nosh.settings') }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        @endif
+        <div id="main">
+            <div class="col-md-12 bg-blue-500">
                 @yield('content')
             </div>
         </div>

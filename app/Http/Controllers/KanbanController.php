@@ -16,42 +16,29 @@ class KanbanController extends Controller {
     {
 		$userId = Session::get('user_id')?Session::get('user_id'):0;
 		$query_result = DB::table('tasks')
-				->select(
-						'tasks.*', 
-						'statuses.title as status_title', 
-						'statuses.slug',
-						'statuses.order as status_order',)
+				->select('tasks.*')
 				->join('statuses', 'statuses.id', '=', 'tasks.status_id')
 				->where('tasks.user_id', '=', $userId)->orderBy('tasks.status_id', 'asc')->orderBy('tasks.order', 'asc')->get();
 
-		$statuses = array();
+		
 		$temptasks = json_encode($query_result);
 		$newtasks = json_decode($temptasks, true);
-		foreach($newtasks as $item){
-			$isExisting = false;
-			foreach($statuses as $status){
-				if($item['status_id'] == $status['id']){
-					$isExisting = true;
-				}
-			}
-			
-			if(!$isExisting){
-				$status_item = array(
-									'id' 	=> $item['status_id'],
-									'slug' 	=> $item['slug'],
-									'title' => $item['status_title'],
-									'order' => $item['status_order'],
-									'tasks' => []
-								);
-				array_push($statuses, $status_item);
-			}
-		}
+
+		$query_result1 = DB::table('statuses')
+				->select('*')
+				->where('user_id', '=', $userId)->orderBy('order', 'asc')->get();
+		$tempStatuses = json_encode($query_result1);
+		$newStatuses = json_decode($tempStatuses, true);
+		
 		$tasks = array();
-		foreach($statuses as $status){
+		foreach($newStatuses as $status){
+			$status['tasks'] = [];
 			foreach($newtasks as $task){
 				if($task['status_id'] == $status['id']){
+					
 					array_push($status['tasks'], $task);
 				}
+				
 			}
 			array_push($tasks, $status);
 		}
@@ -122,53 +109,100 @@ class KanbanController extends Controller {
     {
         //
 	}
-	
-	function getTasks(){
-		$query_result = DB::table('tasks')
-				->select(
-						'tasks.id as id', 
-						'tasks.title as title',
-						'tasks.description', 
-						'tasks.count',
-						'tasks.order', 
-						'tasks.user_id', 
-						'tasks.status_id',
-						'tasks.created_at',
-						'tasks.updated_at', 
-						'statuses.title as status_title', 
-						'statuses.slug',
-						'statuses.order as status_order',)
-				->join('statuses', 'statuses.id', '=', 'tasks.status_id')
-				->where('tasks.user_id', '=', Session::get('user_id'))->orderBy('tasks.status_id', 'asc')->orderBy('tasks.order', 'asc')->get();
 
-		$statuses = array();
-		$temptasks = json_encode($query_result);
-		$newtasks = json_decode($temptasks, true);
-		foreach($newtasks as $item){
-			$isExisting = false;
-			foreach($statuses as $status){
-				if($item['status_id'] == $status['id']){
-					$isExisting = true;
-				}
+	public static function updateDB($data){
+
+		$userId = Session::get('user_id')?Session::get('user_id'):0;
+
+		foreach($data as $key=>$v){
+			$is_update= false;
+			$title = "";
+			switch ($key){
+				case 'number_messages':
+					$title = trans('nosh.messages');
+					$is_update= true;
+					break;
+				case 'number_scans':
+					$title = trans('nosh.scanned_documents');
+					$is_update= true;
+					break;
+				case 'number_appts':
+					$title = trans('nosh.appointments_today');
+					$is_update= true;
+					break;
+				case 'number_t_messages':
+					$title = trans('nosh.telephone_messages');
+					$is_update= true;
+					break;
+				case 'number_encounters':
+					$title = trans('nosh.encounters_complete');
+					$is_update= true;
+					break;
+				case 'number_reminders':
+					$title = trans('nosh.reminders');
+					$is_update= true;
+					break;
+				case 'number_bills':
+					$title = trans('nosh.bills_process');
+					$is_update= true;
+					break;
+				case 'number_tests':
+					$title = trans('nosh.test_results_review');
+					$is_update= true;
+					break;
+				case 'number_faxes':
+					$title = trans('nosh.fax_messages');
+					$is_update= true;
+					break;					
+				default:
+					break;
+			}
+			if($is_update){
+				$data = array(
+					'title'=>$title,
+					'description'=>'',
+					'count'=>$v,
+					'user_id'=>$userId,
+				);
+				DB::table('tasks')->updateOrInsert
+				(
+					[
+						'user_id'=>$userId,
+						'title'=>$title,
+					],
+					$data
+				);
 			}
 			
-			if(!$isExisting){
-				$status_item = array(
-									'id' 	=> $item['status_id'],
-									'slug' 	=> $item['slug'],
-									'title' => $item['status_title'],
-									'order' => $item['status_order'],
-									'tasks' => []
-								);
-				array_push($statuses, $status_item);
-			}
 		}
+	}
+	
+	function getTasks(){
+		$userId = Session::get('user_id')?Session::get('user_id'):0;
+		$query_result = DB::table('tasks')
+				->select('tasks.*')
+				->join('statuses', 'statuses.id', '=', 'tasks.status_id')
+				->where('tasks.user_id', '=', $userId)->orderBy('tasks.status_id', 'asc')->orderBy('tasks.order', 'asc')->get();
+
+		
+		$temptasks = json_encode($query_result);
+		$newtasks = json_decode($temptasks, true);
+
+		$query_result1 = DB::table('statuses')
+				->select('*')
+				->where('user_id', '=', $userId)->orderBy('order', 'asc')->get();
+		$tempStatuses = json_encode($query_result1);
+		$newStatuses = json_decode($tempStatuses, true);
+		
 		$tasks = array();
-		foreach($statuses as $status){
+		foreach($newStatuses as $status){
+			$status['tasks'] = [];
 			foreach($newtasks as $task){
 				if($task['status_id'] == $status['id']){
+					
 					array_push($status['tasks'], $task);
 				}
+				
 			}
 			array_push($tasks, $status);
 		}
