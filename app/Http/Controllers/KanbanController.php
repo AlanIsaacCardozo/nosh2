@@ -208,10 +208,7 @@ class KanbanController extends Controller {
 				$data = array(
 					'title'=>$title,
 					'description'=>'',
-					'order' => $i++,
 					'count'=>$v,
-					'status_id'=>1,
-					'user_id'=>$userId,
 				);
 				DB::table('tasks')->updateOrInsert
 				(
@@ -246,7 +243,6 @@ class KanbanController extends Controller {
 			$status->tasks = [];
 			foreach($task_result as $task){
 				if($task->status_id == $status->id){
-					
 					array_push($status->tasks, $task);
 				}
 				
